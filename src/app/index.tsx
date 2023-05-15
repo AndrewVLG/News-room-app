@@ -1,9 +1,15 @@
-const App = () => {
+import { FunctionComponent } from "react";
+import { store } from "./app-redux";
+import { RouterProvider } from "react-router";
+import { router } from "./app-routing";
+import { Provider } from "react-redux";
 
-    return (
-        <h1>
-            Hello, World!
-        </h1>
-    )
+
+const App:FunctionComponent = () => {
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router}/>
+    </Provider>
+  )
 }
 export default App;
