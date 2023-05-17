@@ -1,21 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { InitNavModule } from '../config/types';
-const initialState:InitNavModule = {
-    isOpenSearch: false,
-    recentViews: [],
+import { createSlice } from '@reduxjs/toolkit'
+import { InitNavModule } from '../config/types'
+const initialState: InitNavModule = {
+  isOpenSearch: false,
+  recentViews: [],
 }
 const navModuleSlice = createSlice({
   name: 'nav-module',
   initialState,
   reducers: {
-
-    setSearch: state => {
-        return {...state, isOpenSearch: !state.isOpenSearch}
+    setSearch: (state) => {
+      return { ...state, isOpenSearch: !state.isOpenSearch }
     },
-
   },
-  extraReducers: {  
-  },
+  extraReducers: {},
 })
-export const searchReducer = navModuleSlice.reducer;
-export const searchActions = navModuleSlice.actions;
+export const searchReducer = navModuleSlice.reducer
+export const searchActions = navModuleSlice.actions

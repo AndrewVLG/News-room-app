@@ -1,5 +1,4 @@
 export interface InitNavModule {
-    recentViews: string[],
-    isOpenSearch: boolean,
-
+  recentViews: string[]
+  isOpenSearch: boolean
 }

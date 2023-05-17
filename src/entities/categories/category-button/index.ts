@@ -1,2 +1,2 @@
-import CategoryButton from "./category-button";
-export default CategoryButton;
+import CategoryButton from './category-button'
+export default CategoryButton

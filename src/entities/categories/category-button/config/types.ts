@@ -1,4 +1,4 @@
 export interface ICategoryButton {
-    text: string
-    href: string
+  text: string
+  href: string
 }

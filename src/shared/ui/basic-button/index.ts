@@ -1,4 +1,4 @@
-import { ButtonBase, styled } from "@mui/material";
+import { ButtonBase, styled } from '@mui/material'
 
 export const BasicButton = styled(ButtonBase)({
   color: 'white',
@@ -9,5 +9,5 @@ export const BasicButton = styled(ButtonBase)({
   '&:hover': {
     backgroundColor: '#FF1E0C',
     borderRadius: '2px',
-  }
+  },
 })

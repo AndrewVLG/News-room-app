@@ -1,2 +1,2 @@
-import CategoriesWrapper from "./categories-wrapper";
-export default CategoriesWrapper;
+import CategoriesWrapper from './categories-wrapper'
+export default CategoriesWrapper
