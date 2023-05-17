@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { ButtonBase, styled } from '@mui/material'
-import { ICategoryButton } from './config/types'
+import { CategoryBtn } from '../../../shared/config/types'
 
 const CatButton = styled(ButtonBase)({
   height: '40px',
@@ -18,7 +18,7 @@ const CatLink = styled('a')({
   textDecorationLine: 'none',
 })
 
-const CategoryButton: FunctionComponent<ICategoryButton> = ({ href, text }) => {
+const CategoryButton: FunctionComponent<CategoryBtn> = ({ href, text }) => {
   return (
     <CatButton>
       <CatLink href={href}>{text}</CatLink>
