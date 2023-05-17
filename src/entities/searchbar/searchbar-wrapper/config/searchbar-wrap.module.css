@@ -1,0 +1,8 @@
+.searchBar {
+    position: absolute;
+    height: 80px;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    left: 256px;
+}

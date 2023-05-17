@@ -1,0 +1,15 @@
+.logo-module {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 185px;
+    height: 80px;
+    top: 0;
+    font-size: 30px;
+    color: white;
+    background-color: #FF1E0C;
+    text-shadow: black 1px 0 10px;
+
+}

@@ -1,0 +1,11 @@
+.categories {
+    position: absolute;
+    top: 1px;
+    left: 353px;
+    display: flex;
+    justify-content: space-around;
+    width: 800px;
+    height: 49%;
+    border-bottom: 1px solid #FF1E0C;
+
+}

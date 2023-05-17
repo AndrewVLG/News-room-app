@@ -1,0 +1,30 @@
+.search-input {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    width: 800px;
+    height: 30px;
+    padding: 3px;
+    animation-name: show-input;
+    animation-duration: 0.3s;
+}
+.search-input.close {
+    animation-name: hide-input;
+}
+@keyframes show-input {
+    0% {
+        width: 10px;
+    }
+    100% {
+        width: 800px;
+    }
+}
+@keyframes hide-input {
+    100% {
+        width: 500px;
+    }
+    0% {
+        width: 10px;
+    }
+}
