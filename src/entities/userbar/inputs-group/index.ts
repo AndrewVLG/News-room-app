@@ -1,2 +1,2 @@
-import InputsGroup from './input-group'
-export default InputsGroup
+import InputsGroup from "./inputs-group";
+export default InputsGroup;
