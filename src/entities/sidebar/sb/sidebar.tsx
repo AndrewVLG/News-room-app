@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'react'
 import { Drawer } from '@mui/material'
 import Logo from '../../../shared/ui/main-logo/main-logo'
+import { Modal } from '../../../shared/config/types'
 import SidebarButton from '../sidebar-button/sidebar-button'
-import { Sidebar } from './config/types'
 import s from './config/sidebar.module.css'
 
-const SB: FunctionComponent<Sidebar> = ({ isOpen, onHandler }) => {
+const SB: FunctionComponent<Modal> = ({ isOpen, onHandler }) => {
   return (
     <Drawer anchor='left' open={isOpen} onClose={onHandler}>
       <Logo />

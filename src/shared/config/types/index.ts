@@ -10,3 +10,8 @@ export interface CategoryBtn {
 export interface Wrapper {
   children: React.ReactNode
 }
+export interface Modal {
+  isOpen: boolean
+  onHandler: () => void
+  anchor?: HTMLElement
+}
