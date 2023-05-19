@@ -1,17 +1,17 @@
 export interface BaseButton {
-  onHandler: () => void;
+  onHandler: () => void
 }
 
 export interface CategoryBtn {
-  text: string;
-  href: string;
+  text: string
+  href: string
 }
 
 export interface Wrapper {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 export interface Sidebar {
-  isOpen: boolean;
-  onHandler: () => void;
-  anchor?: HTMLElement;
+  isOpen: boolean
+  onHandler: () => void
+  anchor?: HTMLElement
 }
