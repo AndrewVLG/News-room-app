@@ -9,7 +9,7 @@ const navModuleSlice = createSlice({
   initialState,
   reducers: {
     setSearch: (state) => {
-      return { ...state, isOpenSearch: !state.isOpenSearch }
+      state.isOpenSearch = !state.isOpenSearch
     },
   },
   extraReducers: {},
