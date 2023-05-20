@@ -2,6 +2,8 @@ import { Suspense } from 'react'
 import { RouterProvider } from 'react-router'
 import { Provider } from 'react-redux'
 import { Box, CircularProgress } from '@mui/material'
+import { UIContext } from '../shared/hooks/use-ui-components'
+import UIComponets from '../shared/ui'
 import { store } from './app-redux'
 import { router } from './app-routing'
 
@@ -24,11 +26,13 @@ const Loader = () => {
 }
 const App = () => {
   return (
-    <Provider store={store}>
-      <Suspense fallback={<Loader />}>
-        <RouterProvider router={router} />
-      </Suspense>
-    </Provider>
+    <UIContext.Provider value={UIComponets}>
+      <Provider store={store}>
+        <Suspense fallback={<Loader />}>
+          <RouterProvider router={router} />
+        </Suspense>
+      </Provider>
+    </UIContext.Provider>
   )
 }
 export default App
