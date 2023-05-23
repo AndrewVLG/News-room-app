@@ -7,6 +7,7 @@ import {
 import MainPage from '../../pages/main/main-page'
 
 const Layout = lazy(() => import('../layout'))
+const RegistrationPage = lazy(() => import('../../pages/registration'))
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ export const router = createBrowserRouter(
         <Route index element={<MainPage />} />
         <Route path=':category' element={<MainPage />} />
       </Route>
+      <Route path='registration' element={<RegistrationPage />} />
     </>,
   ),
 )

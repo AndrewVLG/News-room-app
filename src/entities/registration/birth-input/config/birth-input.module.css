@@ -1,0 +1,9 @@
+.birthInput {
+    display: flex;
+    height: 70px;
+    width:440px;
+    justify-content: space-around;
+    align-items: center;
+    color: "white";
+    margin-left: 8px;
+}
