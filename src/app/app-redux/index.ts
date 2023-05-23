@@ -1,12 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { searchReducer } from '../../features/searchbar/model/searchbar-slice'
 import { authReducer } from '../../features/userbar/model/login-slice'
+import { regReducer } from '../../features/registration/model/registration-slice'
+import { registrationMiddleware } from './middleware/reg-middleware'
+
+const rootReducer = combineReducers({
+  searchBar: searchReducer,
+  auth: authReducer,
+  registration: regReducer,
+})
 
 export const store = configureStore({
-  reducer: {
-    searchBar: searchReducer,
-    auth: authReducer,
-  },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(registrationMiddleware),
 })
-export type RootState = ReturnType<typeof store.getState>
+
+export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch
