@@ -1,7 +1,8 @@
 import { Suspense } from 'react'
 import { RouterProvider } from 'react-router'
 import { Provider } from 'react-redux'
-import { Box, CircularProgress } from '@mui/material'
+import { Box, CircularProgress, ThemeProvider } from '@mui/material'
+import { theme } from '../shared/config/theme'
 import { store } from './app-redux'
 import { router } from './app-routing'
 
@@ -25,9 +26,11 @@ const Loader = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <Suspense fallback={<Loader />}>
-        <RouterProvider router={router} />
-      </Suspense>
+      <ThemeProvider theme={theme}>
+        <Suspense fallback={<Loader />}>
+          <RouterProvider router={router} />
+        </Suspense>
+      </ThemeProvider>
     </Provider>
   )
 }

@@ -1,7 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { searchReducer } from "../../features/searchbar/model/searchbar-slice";
 import { authReducer } from "../../features/userbar/model/login-slice";
 
+const rootReducer = combineReducers({});
 export const store = configureStore({
   reducer: {
     searchBar: searchReducer,
