@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
-import Logo from "../../../shared/ui/main-logo/main-logo";
-import s from "./config/registration-wrap.module.css";
+import { PropsWithChildren } from 'react'
+import Logo from '../../../shared/ui/main-logo/main-logo'
+import s from './config/registration-wrap.module.css'
 
 const RegistrationWrapper = ({ children }: PropsWithChildren) => {
   return (
@@ -11,7 +11,7 @@ const RegistrationWrapper = ({ children }: PropsWithChildren) => {
       <h2>Страница регистрации</h2>
       {children}
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationWrapper;
+export default RegistrationWrapper
