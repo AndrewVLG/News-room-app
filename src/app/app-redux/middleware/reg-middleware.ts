@@ -6,10 +6,10 @@ import {
 } from '../../../features/registration/model/types'
 import { RootState } from '..'
 
-const regExp = /!|#|@|%/
+const passwordCharacters = /!|#|@|%/
 const checkData = (action: any, next: R.Dispatch<R.AnyAction>) => {
   switch (true) {
-    case action.payload.length >= 5 && regExp.test(action.payload):
+    case action.payload.length >= 5 && passwordCharacters.test(action.payload):
       next(
         regActions.setPasswordStatus([
           InputStatus.success,
@@ -19,7 +19,7 @@ const checkData = (action: any, next: R.Dispatch<R.AnyAction>) => {
       next(action)
       break
 
-    case action.payload.length <= 5 && regExp.test(action.payload):
+    case action.payload.length <= 5 && passwordCharacters.test(action.payload):
       next(
         regActions.setPasswordStatus([
           InputStatus.warning,
@@ -28,7 +28,7 @@ const checkData = (action: any, next: R.Dispatch<R.AnyAction>) => {
       )
       break
 
-    case action.payload.length >= 5 && !regExp.test(action.payload):
+    case action.payload.length >= 5 && !passwordCharacters.test(action.payload):
       next(
         regActions.setPasswordStatus([
           InputStatus.success,
