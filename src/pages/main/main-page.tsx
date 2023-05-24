@@ -1,7 +1,9 @@
+import s from './config/main.module.css'
+
 const MainPage = () => {
   return (
-    <div>
-      <h1>All News</h1>
+    <div className={s.main}>
+      <h3>На первых полосах</h3>
     </div>
   )
 }

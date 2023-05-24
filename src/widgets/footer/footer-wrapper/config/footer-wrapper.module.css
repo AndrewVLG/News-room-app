@@ -1,6 +1,6 @@
 .footer {
-    position: absolute;
-    top: 100vh;
+    position: relative;
+    top: 0;
     left: 0;
     height: 80px;
     width: 100%;
