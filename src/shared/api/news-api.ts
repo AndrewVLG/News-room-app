@@ -47,7 +47,7 @@ export const newsApi = createApi({
     searchNews: builder.query<Response, QueryParams>({
       query: ({ searchP, pageSize }) => ({
         url: `everything`,
-        params: { p: searchP, pageSize, apiKey: _API_KEY },
+        params: { q: searchP, pageSize, apiKey: _API_KEY },
       }),
     }),
   }),
