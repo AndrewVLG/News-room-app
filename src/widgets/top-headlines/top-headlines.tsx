@@ -12,7 +12,7 @@ const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
       <h3>На первых полосах</h3>
       {articles &&
         articles.map((article: Article, id: number) => (
-          <ArticleCard {...article} />
+          <ArticleCard {...article} key={id} />
         ))}
     </Stack>
   )
