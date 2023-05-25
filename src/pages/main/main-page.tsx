@@ -5,7 +5,7 @@ import TopHeadlines from '../../widgets/top-headlines'
 import s from './config/main.module.css'
 
 const MainPage = () => {
-  const { data, isLoading } = useGetHeadlinesQuery('us')
+  const { data, isLoading } = useGetHeadlinesQuery({ country: 'us' })
 
   return (
     <div className={s.main}>

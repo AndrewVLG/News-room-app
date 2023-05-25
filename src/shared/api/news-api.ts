@@ -19,21 +19,36 @@ export interface Response {
   totalResults: number
   articles: Article[]
 }
+interface QueryParams {
+  country?: Country
+  category?: string
+  searchP?: string
+  pageSize?: string
+}
+
 export const newsApi = createApi({
   reducerPath: 'news',
 
   baseQuery: fetchBaseQuery({ baseUrl: _BASE_URL }),
 
   endpoints: (builder) => ({
-    getHeadlines: builder.query<Response, Country>({
-      query: (region) =>
-        `top-headlines?country=${region}&pageSize=30&apiKey=${_API_KEY}`,
+    getHeadlines: builder.query<Response, QueryParams>({
+      query: ({ country }) => ({
+        url: `top-headlines`,
+        params: { country, apiKey: _API_KEY },
+      }),
     }),
-    getNewsByCategory: builder.query({
-      query: (params) => `top-headlines?${params}&apiKey=${_API_KEY}`,
+    getNewsByCategory: builder.query<Response, QueryParams>({
+      query: ({ country, category }) => ({
+        url: `top-headlines`,
+        params: { country, category, apiKey: _API_KEY },
+      }),
     }),
-    searchNews: builder.query({
-      query: (value) => `everything?q=${value}&apiKey=${_API_KEY}`,
+    searchNews: builder.query<Response, QueryParams>({
+      query: ({ searchP, pageSize }) => ({
+        url: `everything`,
+        params: { p: searchP, pageSize, apiKey: _API_KEY },
+      }),
     }),
   }),
 })

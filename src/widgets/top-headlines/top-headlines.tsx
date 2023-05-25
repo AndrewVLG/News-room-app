@@ -6,7 +6,6 @@ interface Props {
 }
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
   const articles = data?.articles
-  console.log(articles)
   return (
     <Stack spacing={2}>
       <h3>На первых полосах</h3>
