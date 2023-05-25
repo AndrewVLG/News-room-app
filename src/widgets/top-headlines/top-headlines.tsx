@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react'
 import { Stack } from '@mui/material'
-import { Response } from '../../shared/api/news-api'
+import { Article, Response } from '../../shared/api/news-api'
+import ArticleCard from '../../entities/article-card/article-card'
 interface Props {
   data: Response | undefined
 }
@@ -10,7 +11,9 @@ const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
     <Stack spacing={2}>
       <h3>На первых полосах</h3>
       {articles &&
-        articles.map((article: any, id: number) => <h3>{article.title}</h3>)}
+        articles.map((article: Article, id: number) => (
+          <ArticleCard {...article} />
+        ))}
     </Stack>
   )
 }
