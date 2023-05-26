@@ -1,21 +1,21 @@
 import { Suspense } from 'react'
 import { RouterProvider } from 'react-router'
-import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
+
 import { theme } from '../shared/config/theme'
 import Loader from '../shared/ui/loader'
-import { store } from './app-redux'
+import useAuth from '../shared/hooks/use-auth'
 import { router } from './app-routing'
 
 const App = () => {
+  const { isAuth } = useAuth()
+  console.log(isAuth)
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Suspense fallback={<Loader />}>
-          <RouterProvider router={router} />
-        </Suspense>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Suspense fallback={<Loader />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </ThemeProvider>
   )
 }
 export default App

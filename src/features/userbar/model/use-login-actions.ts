@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux'
 import { useDispatch } from 'react-redux'
-import { makeAuth, authMe, loginActions } from './login-slice'
+import { makeAuth, loginActions } from './login-slice'
 
-const actions = { ...loginActions, makeAuth, authMe }
+const actions = { ...loginActions, makeAuth }
 const useLoginActions = () => {
   const dispatch = useDispatch()
   return bindActionCreators(actions, dispatch)

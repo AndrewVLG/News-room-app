@@ -5,41 +5,26 @@ import LocalStorageAuth, {
 interface User {
   login: string | null
   password: string | null
-  remember: boolean
 }
 export const makeAuth = RTK.createAsyncThunk(
   'login-slice/makeAuth',
-  async ({ login, password, remember }: User) => {
-    const response: Response = await new LocalStorageAuth(false).authorization(
+  async ({ login, password }: User) => {
+    const response: Response = await new LocalStorageAuth().authorization(
       login,
       password,
     )
-    if (typeof response.t === 'string' && remember) {
-      localStorage.setItem('token', response.t)
-    }
-    if (typeof response.t === 'string' && !remember) {
-      sessionStorage.setItem('token', response.t)
-    }
 
     return response
   },
 )
-export const authMe = RTK.createAsyncThunk('login-slice/authMe', async () => {
-  if (sessionStorage.getItem('token')) {
-    return await new LocalStorageAuth(false).authMe(
-      sessionStorage.getItem('token') as string,
-    )
-  }
-  return await new LocalStorageAuth(false).authMe(
-    localStorage.getItem('token') as string,
-  )
-})
+
 interface Init {
   isLoading: boolean
   login: string | null
   password: string | null
   error: string | null
   authComplete: boolean
+  rememberUser: boolean
 }
 const initialState: Init = {
   isLoading: false,
@@ -47,6 +32,7 @@ const initialState: Init = {
   password: '',
   error: '',
   authComplete: false,
+  rememberUser: false,
 }
 const loginSlice = RTK.createSlice({
   name: 'login-slice',
@@ -60,6 +46,9 @@ const loginSlice = RTK.createSlice({
     },
     clearError: (state) => {
       state.error = null
+    },
+    setRemember: (state, action: RTK.PayloadAction<boolean>) => {
+      state.rememberUser = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -80,14 +69,6 @@ const loginSlice = RTK.createSlice({
     builder.addCase(makeAuth.rejected, (state) => {
       state.error = 'Неверный логин или пароль'
       state.isLoading = false
-    })
-
-    builder.addCase(authMe.fulfilled, (state) => {
-      state.authComplete = true
-    })
-
-    builder.addCase(authMe.rejected, (state) => {
-      state.authComplete = false
     })
   },
 })

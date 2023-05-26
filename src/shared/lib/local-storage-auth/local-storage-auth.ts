@@ -14,10 +14,9 @@ export interface Response {
 
 const db = new FakeDatabase()
 
-class LocalStorageAuth implements LSAuth {
-  constructor(readonly isLogin: boolean) {
+class LocalStorageAuth {
+  constructor() {
     db.init()
-    this.isLogin = false
   }
 
   registration() {

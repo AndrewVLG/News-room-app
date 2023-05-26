@@ -1,5 +1,6 @@
 import { useState, MouseEvent, useEffect, ChangeEvent } from 'react'
 import { useSelector } from 'react-redux'
+
 import { RootState } from '../../app/app-redux'
 import UserbarWrapper from '../../entities/userbar/userbar-wrapper'
 import LoginButton from '../../entities/userbar/login-button'
@@ -10,23 +11,24 @@ import useLoginActions from './model/use-login-actions'
 
 const Userbar = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
-  const [remember, setRememberUser] = useState<boolean>(false)
   const isOpen = Boolean(anchorEl)
-  const { error, login, password, authComplete, isLoading } = useSelector(
-    (state: RootState) => state.auth,
-  )
-  console.log(login)
-  const { authMe, clearError, makeAuth, writeAuthLogin, writeAuthPassword } =
-    useLoginActions()
+  const { error, login, password, authComplete, isLoading, rememberUser } =
+    useSelector((state: RootState) => state.auth)
 
-  useEffect(() => {
-    authMe()
-  }, [])
+  const {
+    clearError,
+    makeAuth,
+    writeAuthLogin,
+    writeAuthPassword,
+    setRemember,
+  } = useLoginActions()
+
   useEffect(() => {
     if (authComplete) {
       setTimeout(() => setAnchorEl(null), 2000)
     }
   }, [authComplete])
+
   useEffect(() => {
     let t: NodeJS.Timeout
     if (error) {
@@ -50,10 +52,10 @@ const Userbar = () => {
     writeAuthPassword(e.currentTarget.value)
   }
   const makeLogin = () => {
-    makeAuth({ login, password, remember })
+    makeAuth({ login, password })
   }
   const memUser = (e: ChangeEvent<HTMLInputElement>) => {
-    setRememberUser(e.target.checked)
+    setRemember(e.target.checked)
   }
   return (
     <UserbarWrapper>
@@ -66,7 +68,7 @@ const Userbar = () => {
         <ControlPanel
           handleSwitch={memUser}
           handleClick={makeLogin}
-          isRemember={remember}
+          isRemember={rememberUser}
           authComplete={authComplete}
           error={error}
           isLoading={isLoading}
