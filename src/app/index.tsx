@@ -8,8 +8,8 @@ import useAuth from '../shared/hooks/use-auth'
 import { router } from './app-routing'
 
 const App = () => {
-  const { isAuth } = useAuth()
-  console.log(isAuth)
+  const { isAuth, user } = useAuth()
+  console.log(isAuth, user)
   return (
     <ThemeProvider theme={theme}>
       <Suspense fallback={<Loader />}>

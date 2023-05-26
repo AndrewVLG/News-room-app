@@ -4,9 +4,9 @@ import { RootState } from '..'
 export const localStorageMiddleware: R.Middleware<null, RootState> =
   (store) => (next) => (action) => {
     if (action.type === 'login-slice/makeAuth/fulfilled') {
-      const isRemberUser = store.getState().auth.rememberUser
+      const isRememberUser = store.getState().auth.rememberUser
       next(action)
-      if (isRemberUser) {
+      if (isRememberUser) {
         localStorage.setItem('news-app-token', action.payload.t)
       } else {
         sessionStorage.setItem('news-app-token', action.payload.t)
