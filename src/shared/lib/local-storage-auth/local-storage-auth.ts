@@ -11,7 +11,10 @@ export interface Response {
   isAuth: boolean
   t: string | null
 }
-
+interface AuthMeResponse {
+  isAuth: boolean
+  user: { login: string; birthDay: string } | null
+}
 const db = new FakeDatabase()
 
 class LocalStorageAuth {
@@ -44,23 +47,43 @@ class LocalStorageAuth {
     })
   }
 
-  authMe(token: string): Promise<boolean> {
+  authMe(token: string): Promise<AuthMeResponse> {
     if (!token) {
       return new Promise((_, rejected) => {
-        rejected(false)
+        rejected({
+          isAuth: false,
+          user: null,
+        })
       })
     }
     const t = Date.now()
     const tokenLife = 180000
     const authTime = Number(token.match(/\d/g)?.join(''))
     const login = token.match(/\D/g)?.join('') as string
-    const userIsFound = db.findUser(login)?.login === login
+    const userIsFound = db.findUser(login)
     const authOk = t - authTime < tokenLife
     return new Promise((resolve, rejected) => {
       if (userIsFound && authOk) {
-        setTimeout(() => resolve(true), 1000)
+        setTimeout(
+          () =>
+            resolve({
+              isAuth: true,
+              user: {
+                login: userIsFound.login,
+                birthDay: userIsFound.birthDay,
+              },
+            }),
+          1000,
+        )
       } else {
-        setTimeout(() => rejected(false), 1000)
+        setTimeout(
+          () =>
+            rejected({
+              isAuth: false,
+              user: null,
+            }),
+          1000,
+        )
       }
     })
   }

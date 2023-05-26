@@ -1,6 +1,7 @@
 interface User {
   login: string
   password: string
+  birthDay: string
 }
 export interface FakeDB {
   init: () => void
@@ -10,10 +11,12 @@ const users: User[] = [
   {
     login: 'Andrey',
     password: '123',
+    birthDay: '28-04-1988',
   },
   {
     login: 'Evgen',
     password: '321',
+    birthDay: '12-09-1985',
   },
 ]
 
