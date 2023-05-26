@@ -4,6 +4,7 @@ import { authReducer } from '../../features/userbar/model/login-slice'
 import { regReducer } from '../../features/registration/model/registration-slice'
 import { newsApi } from '../../shared/api/news-api'
 import { registrationMiddleware } from './middleware/reg-middleware'
+import { localStorageMiddleware } from './middleware/local-storage-middleware'
 
 const rootReducer = combineReducers({
   searchBar: searchReducer,
@@ -15,7 +16,11 @@ const rootReducer = combineReducers({
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(registrationMiddleware, newsApi.middleware),
+    getDefaultMiddleware().concat(
+      registrationMiddleware,
+      localStorageMiddleware,
+      newsApi.middleware,
+    ),
 })
 
 export type RootState = ReturnType<typeof rootReducer>
