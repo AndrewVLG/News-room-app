@@ -9,7 +9,6 @@ import { router } from './app-routing'
 
 const App = () => {
   const { isAuth, user } = useAuth()
-  console.log(isAuth, user)
   return (
     <ThemeProvider theme={theme}>
       <Suspense fallback={<Loader />}>
