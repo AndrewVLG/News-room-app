@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../app/app-redux'
 import LocalStorageAuth from '../lib/local-storage-auth/local-storage-auth'
 const localStorageAuth = new LocalStorageAuth()
-interface User {
+export interface User {
   login: string
   birthDay: string
 }
