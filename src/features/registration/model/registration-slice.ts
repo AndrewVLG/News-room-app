@@ -1,19 +1,25 @@
 import * as RTK from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
-import { InitialState, InputStatus, REDUCERS, Request } from './types'
+import LocalStorageAuth from '../../../shared/lib/local-storage-auth/local-storage-auth'
+import { User } from '../../../shared/lib/local-storage-auth/types'
+import { InitialState, InputStatus, Request } from './types'
 
+const fakeApi = new LocalStorageAuth()
 const initialState: InitialState = {
   loginValue: null,
   passwordValue: null,
   birthDay: null,
   confirmValue: null,
-  buttonIsActiv: false,
+  buttonIsActive: false,
   passwordStatus: [InputStatus.warning, InputStatus.warning],
   confirmStatus: InputStatus.warning,
 }
-export const sendRegData = RTK.createAsyncThunk('sendRegData', async () => {
-  console.log('data sent')
-})
+export const sendRegData = RTK.createAsyncThunk(
+  'sendRegData',
+  async (data: User) => {
+    fakeApi.registration(data).then((data) => console.log(data))
+  },
+)
 const registrationSlice = createSlice({
   name: 'reg',
   initialState,
@@ -37,10 +43,10 @@ const registrationSlice = createSlice({
       state.passwordStatus = action.payload
     },
     sendData: (state, action: RTK.PayloadAction<Request>) => {
-      console.log(`send: ${action.payload}`)
+      console.log('afgegt')
     },
     setButtonState: (state, action: RTK.PayloadAction<boolean>) => {
-      state.buttonIsActiv = action.payload
+      state.buttonIsActive = action.payload
     },
   },
 })

@@ -1,9 +1,13 @@
 import { FunctionComponent } from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Typography from '@mui/material/Typography'
-import { Button, CardActionArea, CardActions } from '@mui/material'
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Button,
+  CardActionArea,
+  CardActions,
+} from '@mui/material'
 import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 

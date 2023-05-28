@@ -3,7 +3,7 @@ export interface BaseButton {
 }
 
 export interface CategoryBtn {
-  text: string
+  name: string
   href: string
 }
 

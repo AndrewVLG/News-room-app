@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export enum InputStatus {
   warning = 'warning',
   success = 'success',
@@ -22,7 +24,7 @@ export enum REDUCERS {
 export interface InitialState {
   loginValue: null | string
   passwordValue: null | string
-  buttonIsActiv: boolean
+  buttonIsActive: boolean
   birthDay: null | string
   confirmValue: null | string
   passwordStatus: InputStatus[]

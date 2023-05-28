@@ -1,5 +1,6 @@
 import { ChangeEventHandler, SyntheticEvent } from 'react'
 import { useSelector } from 'react-redux'
+import dayjs from 'dayjs'
 import { RootState } from '../../app/app-redux'
 import BirthInput from '../../entities/registration/birth-input/'
 import { RegistrationButton } from '../../shared/ui/basic-button'
@@ -11,9 +12,10 @@ const Registration = () => {
   const {
     loginValue,
     passwordValue,
+    birthDay,
     passwordStatus,
     confirmStatus,
-    buttonIsActiv,
+    buttonIsActive,
   } = useSelector((state: RootState) => state.registration)
 
   const {
@@ -36,13 +38,14 @@ const Registration = () => {
   const writeConfirmValue: ChangeEventHandler<HTMLInputElement> = (e) => {
     setConfirmValue(e.target.value)
   }
-  const writeBirthDay: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setBirthDayValue(e.target.value)
+  const writeBirthDay = (e: dayjs.Dayjs | null) => {
+    const data = e?.format('DD/MM/YYYY') as string | null
+    setBirthDayValue(data)
   }
   const send = (e: SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
-    sendData({ birthDay: '28-04-1988', login: 'e221', password: '1rf4f' })
+    sendRegData({ login: loginValue, password: passwordValue, birthDay })
   }
   const passwordInputs: {
     name: string
@@ -73,12 +76,13 @@ const Registration = () => {
       handler: writeConfirmValue,
     },
   ]
+  console.log(birthDay)
   return (
     <form>
       <CustomInputs child={passwordInputs} />
-      <BirthInput />
+      <BirthInput handlerDateInput={writeBirthDay} />
       <RegistrationButton
-        disabled={!buttonIsActiv}
+        disabled={!buttonIsActive}
         onClick={send}
         type='submit'
       >

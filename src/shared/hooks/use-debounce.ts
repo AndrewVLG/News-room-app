@@ -1,8 +1,10 @@
 import { useState, useEffect, ChangeEventHandler } from 'react'
+
 interface UseDebounce {
   value: string
   handler: ChangeEventHandler
 }
+
 export const useDebounce = (delay: number): UseDebounce => {
   const [state1, setState1] = useState('')
   const [value, setValue] = useState('')

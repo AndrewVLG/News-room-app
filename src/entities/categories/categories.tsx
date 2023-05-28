@@ -1,14 +1,12 @@
 import CategoryButton from './category-button'
 import CategoriesWrapper from './categories-wrapper'
-
+import buttons from './buttons'
 const Categories = () => {
   return (
     <CategoriesWrapper>
-      <CategoryButton text='Бизнес' href='/business' />
-      <CategoryButton text='Спорт' href='/sports' />
-      <CategoryButton text='Здоровье' href='/health' />
-      <CategoryButton text='Развлечение' href='/entertainment' />
-      <CategoryButton text='Наука' href='/science' />
+      {buttons.map((button, id) => (
+        <CategoryButton {...button} key={id} />
+      ))}
     </CategoriesWrapper>
   )
 }

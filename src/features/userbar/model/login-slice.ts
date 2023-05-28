@@ -1,7 +1,6 @@
 import * as RTK from '@reduxjs/toolkit'
-import LocalStorageAuth, {
-  Response,
-} from '../../../shared/lib/local-storage-auth/local-storage-auth'
+import LocalStorageAuth from '../../../shared/lib/local-storage-auth/local-storage-auth'
+import { Response } from '../../../shared/lib/local-storage-auth/types'
 interface User {
   login: string | null
   password: string | null

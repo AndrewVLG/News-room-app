@@ -36,5 +36,16 @@ class FakeDatabase implements FakeDB {
       return user
     }
   }
+  getAllUsers(): User[] {
+    return JSON.parse(localStorage.getItem('users') as string)
+  }
+  pushUser(user: {
+    login: string | null
+    password: string | null
+    birthDay: string | null
+  }) {
+    const users = JSON.parse(localStorage.getItem('users') as string)
+    localStorage.setItem('users', JSON.stringify([...users, user]))
+  }
 }
 export default FakeDatabase

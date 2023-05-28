@@ -1,20 +1,6 @@
-import { rejects } from 'assert'
-import FakeDatabase, { FakeDB } from './fake-db'
+import FakeDatabase from './fake-db'
+import { AuthMeResponse, Response, User } from './types'
 
-interface LSAuth {
-  isLogin: boolean
-  registration: () => void
-  authorization: (login: string, password: string) => void
-  authMe: (token: string) => void
-}
-export interface Response {
-  isAuth: boolean
-  t: string | null
-}
-interface AuthMeResponse {
-  isAuth: boolean
-  user: { login: string; birthDay: string } | null
-}
 const db = new FakeDatabase()
 
 class LocalStorageAuth {
@@ -22,8 +8,20 @@ class LocalStorageAuth {
     db.init()
   }
 
-  registration() {
-    return
+  registration({ login, password, birthDay }: User): Promise<Response> {
+    const users = db.getAllUsers()
+    const error =
+      users.find((user) => user.login === login) &&
+      'Пользователь с таким логином существует'
+    if (error) {
+      return new Promise((_, rej) => setTimeout(() => rej(), 1000))
+    } else {
+      db.pushUser({ login, password, birthDay })
+      const t = Date.now()
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({ isAuth: true, t: `${login}${t}` }))
+      })
+    }
   }
 
   authorization(

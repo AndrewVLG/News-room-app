@@ -18,10 +18,10 @@ const CatLink = styled('a')({
   textDecorationLine: 'none',
 })
 
-const CategoryButton: FunctionComponent<CategoryBtn> = ({ href, text }) => {
+const CategoryButton: FunctionComponent<CategoryBtn> = ({ href, name }) => {
   return (
     <CatLink href={href}>
-      <CatButton>{text}</CatButton>
+      <CatButton>{name}</CatButton>
     </CatLink>
   )
 }

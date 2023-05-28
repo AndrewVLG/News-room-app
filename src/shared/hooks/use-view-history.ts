@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { User } from './use-auth'
 import { Article } from '../api/news-api'
+import { User } from './use-auth'
 
 interface UseViewHistory {
   history: Article[]

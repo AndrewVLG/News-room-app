@@ -17,10 +17,10 @@ const LinkBtn = styled('a')({
   textDecorationLine: 'none',
 })
 
-const SidebarButton: FunctionComponent<CategoryBtn> = ({ href, text }) => {
+const SidebarButton: FunctionComponent<CategoryBtn> = ({ href, name }) => {
   return (
     <SidebarBtn>
-      <LinkBtn href={href}>{text}</LinkBtn>
+      <LinkBtn href={href}>{name}</LinkBtn>
     </SidebarBtn>
   )
 }
