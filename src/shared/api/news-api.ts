@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const _BASE_URL = 'https://newsapi.org/v2/'
 const _API_KEY = 'd25980c6b9494497a47ba65221d3c747'
-type Country = 'ru' | 'us' | 'de' | 'fr'
+const _API_KEY2 = '0ec8e1e62dc84b25afe7587c9b7791d7'
+export type Country = 'ru' | 'us' | 'de' | 'fr' | 'ua'
 
 export interface Article {
   author: null | string
@@ -35,19 +36,19 @@ export const newsApi = createApi({
     getHeadlines: builder.query<Response, QueryParams>({
       query: ({ country }) => ({
         url: `top-headlines`,
-        params: { country, apiKey: _API_KEY },
+        params: { country, apiKey: _API_KEY2 },
       }),
     }),
     getNewsByCategory: builder.query<Response, QueryParams>({
       query: ({ country, category }) => ({
         url: `top-headlines`,
-        params: { country, category, apiKey: _API_KEY },
+        params: { country, category, apiKey: _API_KEY2 },
       }),
     }),
     searchNews: builder.query<Response, QueryParams>({
       query: ({ searchP, pageSize }) => ({
         url: `everything`,
-        params: { q: searchP, pageSize, apiKey: _API_KEY },
+        params: { q: searchP, pageSize, apiKey: _API_KEY2 },
       }),
     }),
   }),

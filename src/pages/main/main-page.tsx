@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef } from 'react'
+import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import { useGetHeadlinesQuery } from '../../shared/api/news-api'
 import Loader from '../../shared/ui/loader'
 import TopHeadlines from '../../widgets/top-headlines'
 import s from './config/main.module.css'
 
 const MainPage = () => {
-  const { data, isLoading } = useGetHeadlinesQuery({ country: 'us' })
+  const { country } = useAppContext()
+  const { data, isLoading } = useGetHeadlinesQuery({ country })
 
   return (
     <div className={s.main}>
