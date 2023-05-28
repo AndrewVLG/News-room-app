@@ -20,9 +20,9 @@ const CatLink = styled('a')({
 
 const CategoryButton: FunctionComponent<CategoryBtn> = ({ href, text }) => {
   return (
-    <CatButton>
-      <CatLink href={href}>{text}</CatLink>
-    </CatButton>
+    <CatLink href={href}>
+      <CatButton>{text}</CatButton>
+    </CatLink>
   )
 }
 export default CategoryButton

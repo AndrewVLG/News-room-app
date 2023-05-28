@@ -5,6 +5,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { Button, CardActionArea, CardActions } from '@mui/material'
 import { Article } from '../../shared/api/news-api'
+import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 
 const ArticleCard: FunctionComponent<Article> = ({
   author,
@@ -16,8 +17,23 @@ const ArticleCard: FunctionComponent<Article> = ({
   url,
   urlToImage,
 }) => {
+  const { addToHistory } = useAppContext()
   return (
-    <Card sx={{ maxWidth: 700 }}>
+    <Card
+      onClick={() =>
+        addToHistory({
+          author,
+          content,
+          description,
+          publishedAt,
+          source,
+          title,
+          url,
+          urlToImage,
+        })
+      }
+      sx={{ maxWidth: 700 }}
+    >
       <CardActionArea>
         <CardMedia
           component='img'

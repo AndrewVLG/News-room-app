@@ -1,18 +1,14 @@
 import { useState, useEffect } from 'react'
 import { User } from './use-auth'
-
-export interface ArticleFromHistory {
-  source: string | null
-  title: string | null
-}
+import { Article } from '../api/news-api'
 
 interface UseViewHistory {
-  history: ArticleFromHistory[]
-  addToHistory: (article: ArticleFromHistory) => void
+  history: Article[]
+  addToHistory: (article: Article) => void
 }
 
 const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
-  const [history, setHistory] = useState<ArticleFromHistory[]>([])
+  const [history, setHistory] = useState<Article[]>([])
   useEffect(() => {
     if (user) {
       const appNewsUserHistory = localStorage.getItem(
@@ -27,7 +23,7 @@ const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
     }
   }, [user])
 
-  const addToHistory = (article: ArticleFromHistory) => {
+  const addToHistory = (article: Article) => {
     if (isAuth) {
       localStorage.setItem(
         `news-app-history-${user?.login}`,

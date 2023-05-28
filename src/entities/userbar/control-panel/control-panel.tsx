@@ -60,6 +60,7 @@ const ControlPanel: FunctionComponent<Control> = ({
       ) : (
         <ModalButton onHandler={handleClick} text='Вход' />
       )}
+      <Link href='history'>История просмотров</Link>
       <Link href='registration'>Регистрация</Link>
     </Stack>
   )

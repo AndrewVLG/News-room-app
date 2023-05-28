@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react'
-import { ArticleFromHistory } from '../../hooks/use-view-history'
-import { Country } from '../news-api'
+import { Article, Country } from '../news-api'
 
 interface User {
   login: string
@@ -10,10 +9,10 @@ interface User {
 interface AppC {
   isAuth: boolean
   user: User | null
-  history: any[] | null
+  history: Article[]
   country: Country
   changeCountry: (country: Country) => void
-  addToHistory: (article: ArticleFromHistory) => void
+  addToHistory: (article: Article) => void
 }
 
 export const AppContext = createContext<AppC>({
@@ -22,7 +21,7 @@ export const AppContext = createContext<AppC>({
   country: 'us',
   history: [],
   changeCountry: (country: Country) => {},
-  addToHistory: (article: ArticleFromHistory) => {},
+  addToHistory: (article: Article) => {},
 })
 
 export const useAppContext = () => {
