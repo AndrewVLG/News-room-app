@@ -22,11 +22,12 @@ export enum REDUCERS {
 }
 
 export interface InitialState {
+  message: string | null
+  isLoading: boolean
+  isSuccess: boolean
   loginValue: null | string
   passwordValue: null | string
   buttonIsActive: boolean
   birthDay: null | string
   confirmValue: null | string
-  passwordStatus: InputStatus[]
-  confirmStatus: InputStatus
 }

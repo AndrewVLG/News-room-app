@@ -1,12 +1,19 @@
+import { log } from 'console'
 import { InputStatus } from '../config/types/types'
 
 interface Validator {
+  loginNotEmpty?: InputStatus
   passwordLength: InputStatus
   passwordSymbol: InputStatus
   confirmStatus: InputStatus
   isSuccess?: boolean
 }
-
+const checkLogin = (login: string | null): InputStatus => {
+  if (!login) {
+    return InputStatus.warning
+  }
+  return InputStatus.success
+}
 const checkPasswordLength = (password: string | null): InputStatus => {
   if (!password || password.length < 5) {
     return InputStatus.warning
@@ -42,27 +49,42 @@ const compareValue = (
   }
 }
 
-const getResult = (value: Validator): boolean => {
-  let isSuccess = true
+const getResult = ({
+  confirmStatus,
+  passwordLength,
+  passwordSymbol,
+  loginNotEmpty,
+}: Validator): boolean => {
+  const isSuccess =
+    confirmStatus === InputStatus.success &&
+    passwordLength === InputStatus.success &&
+    passwordSymbol === InputStatus.success &&
+    loginNotEmpty === InputStatus.success
 
-  for (const key in value) {
-    console.log(key)
-    if (key !== InputStatus.success) {
-      isSuccess = false
-    }
-  }
   return isSuccess
 }
 
 const validator = (
+  login: string | null,
   password: string | null,
   confirm: string | null,
 ): Validator => {
-  console.log(password, confirm)
+  const loginNotEmpty = checkLogin(login)
   const passwordLength = checkPasswordLength(password)
   const passwordSymbol = checkSymbol(password)
   const confirmStatus = compareValue(password, confirm)
-  const isSuccess = getResult({ passwordLength, confirmStatus, passwordSymbol })
-  return { passwordLength, passwordSymbol, confirmStatus, isSuccess }
+  const isSuccess = getResult({
+    passwordLength,
+    confirmStatus,
+    passwordSymbol,
+    loginNotEmpty,
+  })
+  return {
+    passwordLength,
+    passwordSymbol,
+    confirmStatus,
+    isSuccess,
+    loginNotEmpty,
+  }
 }
 export default validator

@@ -19,7 +19,7 @@ class LocalStorageAuth {
       db.pushUser({ login, password, birthDay })
       const t = Date.now()
       return new Promise((resolve) => {
-        setTimeout(() => resolve({ isAuth: true, t: `${login}${t}` }))
+        setTimeout(() => resolve({ isAuth: true, t: `${login}${t}` }), 1000)
       })
     }
   }

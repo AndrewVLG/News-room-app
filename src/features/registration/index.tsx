@@ -1,6 +1,7 @@
-import { ChangeEventHandler, SyntheticEvent } from 'react'
+import { ChangeEventHandler, SyntheticEvent, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
+import { CircularProgress, Snackbar } from '@mui/material'
 import { RootState } from '../../app/app-redux'
 import BirthInput from '../../entities/registration/birth-input/'
 import { RegistrationButton } from '../../shared/ui/basic-button'
@@ -10,9 +11,14 @@ import useRegActions from './model/use-reg-actions'
 import { InputStatus } from './model/types'
 
 const Registration = () => {
-  const { loginValue, passwordValue, confirmValue, birthDay } = useSelector(
-    (state: RootState) => state.registration,
-  )
+  const {
+    loginValue,
+    passwordValue,
+    confirmValue,
+    birthDay,
+    isLoading,
+    message,
+  } = useSelector((state: RootState) => state.registration)
 
   const {
     setLoginValue,
@@ -20,7 +26,16 @@ const Registration = () => {
     setConfirmValue,
     sendRegData,
     setBirthDayValue,
+    clearError,
   } = useRegActions()
+
+  const {
+    passwordLength,
+    passwordSymbol,
+    confirmStatus,
+    isSuccess,
+    loginNotEmpty,
+  } = validator(loginValue, passwordValue, confirmValue)
 
   const writeUserLogin: ChangeEventHandler<HTMLInputElement> = (e) => {
     setLoginValue(e.target.value)
@@ -42,8 +57,7 @@ const Registration = () => {
 
     sendRegData({ login: loginValue, password: passwordValue, birthDay })
   }
-  const { passwordLength, passwordSymbol, confirmStatus, isSuccess } =
-    validator(passwordValue, confirmValue)
+
   const passwordInputs: {
     name: string
     alerts?: { message: string; status: InputStatus }[]
@@ -51,6 +65,12 @@ const Registration = () => {
   }[] = [
     {
       name: 'Логин',
+      alerts: [
+        {
+          message: 'Логин не может быть пустым',
+          status: loginNotEmpty as InputStatus,
+        },
+      ],
       handler: writeUserLogin,
     },
     {
@@ -73,14 +93,27 @@ const Registration = () => {
       handler: writeConfirmValue,
     },
   ]
-
+  useEffect(() => {
+    setTimeout(() => clearError(), 2000)
+  }, [message])
   return (
     <form>
+      {message && (
+        <Snackbar
+          message={message}
+          open={Boolean(message)}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        />
+      )}
       <CustomInputs child={passwordInputs} />
       <BirthInput handlerDateInput={writeBirthDay} />
-      <RegistrationButton disabled={isSuccess} onClick={send} type='submit'>
-        Зарегистрироваться
-      </RegistrationButton>
+      {isLoading ? (
+        <CircularProgress size={25} />
+      ) : (
+        <RegistrationButton disabled={!isSuccess} onClick={send} type='submit'>
+          Зарегистрироваться
+        </RegistrationButton>
+      )}
     </form>
   )
 }

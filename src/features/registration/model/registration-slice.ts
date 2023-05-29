@@ -6,21 +6,22 @@ import { InitialState, InputStatus, Request } from './types'
 
 const fakeApi = new LocalStorageAuth()
 const initialState: InitialState = {
+  message: null,
+  isLoading: false,
+  isSuccess: false,
   loginValue: null,
   passwordValue: null,
   birthDay: null,
   confirmValue: null,
   buttonIsActive: false,
-  passwordStatus: [InputStatus.warning, InputStatus.warning],
-  confirmStatus: InputStatus.warning,
 }
 export const sendRegData = RTK.createAsyncThunk(
   'sendRegData',
   async (data: User) => {
-    fakeApi
+    await fakeApi
       .registration(data)
-      .then((data) => console.log('Регистрация выполнена'))
-      .then((e) => console.log('Пользователь с таким логином существует'))
+      .then(() => console.log('Регистрация выполнена'))
+      .then(() => console.log('Пользователь с таким логином существует'))
   },
 )
 const registrationSlice = createSlice({
@@ -39,18 +40,28 @@ const registrationSlice = createSlice({
     setBirthDayValue: (state, action: RTK.PayloadAction<string | null>) => {
       state.birthDay = action.payload
     },
-    setConfirmStatus: (state, action: RTK.PayloadAction<InputStatus>) => {
-      state.confirmStatus = action.payload
-    },
-    setPasswordStatus: (state, action: RTK.PayloadAction<InputStatus[]>) => {
-      state.passwordStatus = action.payload
-    },
-    sendData: (state, action: RTK.PayloadAction<Request>) => {
-      console.log('afgegt')
-    },
     setButtonState: (state, action: RTK.PayloadAction<boolean>) => {
       state.buttonIsActive = action.payload
     },
+    clearError: (state) => {
+      state.message = null
+    },
+  },
+  extraReducers: (build) => {
+    build.addCase(sendRegData.pending, (state) => {
+      state.isSuccess = false
+      state.isLoading = true
+    })
+    build.addCase(sendRegData.fulfilled, (state) => {
+      state.message = 'Регистрация выполнена успешно'
+      state.isSuccess = true
+      state.isLoading = false
+    })
+    build.addCase(sendRegData.rejected, (state) => {
+      state.message = 'Пользователь с таким логином существует'
+      state.isSuccess = false
+      state.isLoading = false
+    })
   },
 })
 export const regReducer = registrationSlice.reducer
