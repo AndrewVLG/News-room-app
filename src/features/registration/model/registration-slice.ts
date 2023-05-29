@@ -17,7 +17,10 @@ const initialState: InitialState = {
 export const sendRegData = RTK.createAsyncThunk(
   'sendRegData',
   async (data: User) => {
-    fakeApi.registration(data).then((data) => console.log(data))
+    fakeApi
+      .registration(data)
+      .then((data) => console.log('Регистрация выполнена'))
+      .then((e) => console.log('Пользователь с таким логином существует'))
   },
 )
 const registrationSlice = createSlice({
