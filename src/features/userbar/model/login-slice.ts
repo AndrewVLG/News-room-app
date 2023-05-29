@@ -21,7 +21,7 @@ interface Init {
   isLoading: boolean
   login: string | null
   password: string | null
-  error: string | null
+  message: string | null
   authComplete: boolean
   rememberUser: boolean
 }
@@ -29,7 +29,7 @@ const initialState: Init = {
   isLoading: false,
   login: '',
   password: '',
-  error: '',
+  message: null,
   authComplete: false,
   rememberUser: false,
 }
@@ -44,7 +44,7 @@ const loginSlice = RTK.createSlice({
       state.password = action.payload
     },
     clearError: (state) => {
-      state.error = null
+      state.message = null
     },
     setRemember: (state, action: RTK.PayloadAction<boolean>) => {
       state.rememberUser = action.payload
@@ -54,7 +54,7 @@ const loginSlice = RTK.createSlice({
     builder.addCase(
       makeAuth.fulfilled,
       (state, action: RTK.PayloadAction<Response>) => {
-        state.error = null
+        state.message = 'Вход выполнен успешно!'
         state.authComplete = action.payload.isAuth
         state.isLoading = false
       },
@@ -62,11 +62,11 @@ const loginSlice = RTK.createSlice({
 
     builder.addCase(makeAuth.pending, (state) => {
       state.isLoading = true
-      state.error = null
+      state.message = null
     })
 
     builder.addCase(makeAuth.rejected, (state) => {
-      state.error = 'Неверный логин или пароль'
+      state.message = 'Неверный логин или пароль'
       state.isLoading = false
     })
   },
