@@ -5,25 +5,20 @@ import { RootState } from '../../app/app-redux'
 import BirthInput from '../../entities/registration/birth-input/'
 import { RegistrationButton } from '../../shared/ui/basic-button'
 import CustomInputs from '../../entities/registration/registration-inputs/registration-inputs'
+import validator from '../../shared/util/validator'
 import useRegActions from './model/use-reg-actions'
 import { InputStatus } from './model/types'
 
 const Registration = () => {
-  const {
-    loginValue,
-    passwordValue,
-    birthDay,
-    passwordStatus,
-    confirmStatus,
-    buttonIsActive,
-  } = useSelector((state: RootState) => state.registration)
+  const { loginValue, passwordValue, confirmValue, birthDay } = useSelector(
+    (state: RootState) => state.registration,
+  )
 
   const {
     setLoginValue,
     setPasswordValue,
     setConfirmValue,
     sendRegData,
-    sendData,
     setBirthDayValue,
   } = useRegActions()
 
@@ -47,6 +42,8 @@ const Registration = () => {
 
     sendRegData({ login: loginValue, password: passwordValue, birthDay })
   }
+  const { passwordLength, passwordSymbol, confirmStatus, isSuccess } =
+    validator(passwordValue, confirmValue)
   const passwordInputs: {
     name: string
     alerts?: { message: string; status: InputStatus }[]
@@ -61,11 +58,11 @@ const Registration = () => {
       alerts: [
         {
           message: 'Пароль должен быть не менее 5 символов',
-          status: passwordStatus[0],
+          status: passwordLength,
         },
         {
           message: 'Пароль должен содержать символы: !, #, @, %',
-          status: passwordStatus[1],
+          status: passwordSymbol,
         },
       ],
       handler: writeUserPassword,
@@ -76,16 +73,12 @@ const Registration = () => {
       handler: writeConfirmValue,
     },
   ]
-  console.log(birthDay)
+
   return (
     <form>
       <CustomInputs child={passwordInputs} />
       <BirthInput handlerDateInput={writeBirthDay} />
-      <RegistrationButton
-        disabled={!buttonIsActive}
-        onClick={send}
-        type='submit'
-      >
+      <RegistrationButton disabled={isSuccess} onClick={send} type='submit'>
         Зарегистрироваться
       </RegistrationButton>
     </form>
