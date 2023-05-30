@@ -2,11 +2,11 @@ import { ChangeEvent, FunctionComponent } from 'react'
 import {
   CircularProgress,
   FormControlLabel,
-  Link,
   Stack,
   Switch,
 } from '@mui/material'
 import ModalButton from './modal-button'
+import { Link } from 'react-router-dom'
 
 interface Control {
   authCompleat: boolean
@@ -45,8 +45,8 @@ const ControlPanel: FunctionComponent<Control> = ({
           text={authCompleat ? 'Выйти' : 'Вход'}
         />
       )}
-      <Link href='history'>История просмотров</Link>
-      <Link href='registration'>Регистрация</Link>
+      <Link to='history'>История просмотров</Link>
+      <Link to='registration'>Регистрация</Link>
     </Stack>
   )
 }

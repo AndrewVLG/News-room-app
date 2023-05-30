@@ -7,7 +7,7 @@ interface UseDebounce {
 }
 
 export const useDebounce = (v: string, delay: number): UseDebounce => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState<string>('')
   const navigate = useNavigate()
   useEffect(() => {
     let timer: NodeJS.Timeout

@@ -5,14 +5,16 @@ import ArticlesSkeleton from '../../shared/ui/articles-skeleton'
 import TopHeadlines from '../../widgets/top-headlines'
 import { useDebounce } from '../../shared/hooks/use-debounce'
 import s from './config/main.module.css'
-
+type Params = {
+  q: string
+}
 const SearchPage = () => {
   const { country } = useAppContext()
-  const { q } = useParams()
-  const { value } = useDebounce(q as string, 700)
+  const { q } = useParams() as Params
+  const { value } = useDebounce(q, 700)
   const { data = [], isLoading } = useSearchNewsQuery(
     { country, q: value },
-    { skip: !q },
+    { skip: !value || value.length < 2 },
   )
 
   return (

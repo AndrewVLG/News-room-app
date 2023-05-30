@@ -13,14 +13,14 @@ const Searchbar = () => {
   const { isOpenSearch } = useSelector((state: RootState) => state.searchBar)
   const { setSearch } = useSearchActions()
   const navigate = useNavigate()
-  const writeSearchValue: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const setSearchValue: ChangeEventHandler<HTMLInputElement> = (e) => {
     navigate(`search/${e.target.value}`)
   }
 
   return (
     <SearchbarWrapper>
       <SearchButton onHandler={setSearch} />
-      {isOpenSearch && <SearchInput handleChangeSearch={writeSearchValue} />}
+      {isOpenSearch && <SearchInput handleChangeSearch={setSearchValue} />}
     </SearchbarWrapper>
   )
 }

@@ -6,8 +6,8 @@ import s from './config/main.module.css'
 
 const MainPage = () => {
   const { country } = useAppContext()
-  const { data, isLoading, isSuccess } = useGetHeadlinesQuery({ country })
-  const articles = isSuccess ? data.articles : []
+  const { data, isLoading } = useGetHeadlinesQuery({ country })
+  const articles = data?.articles || []
   return (
     <div className={s.main}>
       {isLoading ? <ArticlesSkeleton /> : <TopHeadlines data={articles} />}

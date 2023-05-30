@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
+import { Link } from 'react-router-dom'
 
 const ArticleCard: FunctionComponent<Article> = ({
   author,
@@ -55,9 +56,7 @@ const ArticleCard: FunctionComponent<Article> = ({
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='primary'>
-          Узнать больше
-        </Button>
+        <Link to={url}>Читать в источнике</Link>
       </CardActions>
     </Card>
   )
