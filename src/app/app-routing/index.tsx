@@ -4,6 +4,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom'
+import SearchPage from '../../pages/search-page'
 
 const Layout = lazy(() => import('../layout'))
 const MainPage = lazy(() => import('../../pages/main/main-page'))
@@ -18,6 +19,7 @@ export const router = createBrowserRouter(
         <Route index element={<MainPage />} />
         <Route path=':category' element={<ByCategory />} />
         <Route path='history' element={<HistoryPage />} />
+        <Route path='search/:q' element={<SearchPage />} />
       </Route>
       <Route path='registration' element={<RegistrationPage />} />
     </>,

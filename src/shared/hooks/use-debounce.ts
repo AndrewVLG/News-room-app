@@ -1,22 +1,19 @@
 import { useState, useEffect, ChangeEventHandler } from 'react'
+import { useNavigate } from 'react-router'
 
 interface UseDebounce {
   value: string
-  handler: ChangeEventHandler
+  handler?: ChangeEventHandler
 }
 
-export const useDebounce = (delay: number): UseDebounce => {
-  const [state1, setState1] = useState('')
-  const [value, setValue] = useState('')
-  const handler: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setState1(e.target.value)
-  }
+export const useDebounce = (v: string, delay: number): UseDebounce => {
+  const [value, setValue] = useState<string>('')
+  const navigate = useNavigate()
   useEffect(() => {
     let timer: NodeJS.Timeout
-    if (state1 !== value) {
-      timer = setTimeout(() => setValue(state1), delay)
-    }
+    timer = setTimeout(() => setValue(v), delay)
+
     return () => clearTimeout(timer)
-  }, [state1])
-  return { value, handler }
+  }, [v])
+  return { value }
 }

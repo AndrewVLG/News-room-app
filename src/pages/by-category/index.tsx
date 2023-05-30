@@ -8,11 +8,11 @@ import s from './config/main.module.css'
 const ByCategory = () => {
   const { category } = useParams()
   const { country } = useAppContext()
-  const { data, isLoading, isSuccess } = useGetNewsByCategoryQuery({
+  const { data, isLoading } = useGetNewsByCategoryQuery({
     country,
     category,
   })
-  const articles = isSuccess ? data.articles : []
+  const articles = data?.articles || []
 
   return (
     <div className={s.main}>
