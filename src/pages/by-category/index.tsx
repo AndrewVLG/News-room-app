@@ -1,7 +1,7 @@
 import { useParams } from 'react-router'
 import TopHeadlines from '../../widgets/top-headlines'
 import { useGetNewsByCategoryQuery } from '../../shared/api/news-api'
-import Loader from '../../shared/ui/loader'
+import ArticlesSkeleton from '../../shared/ui/articles-skeleton'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import s from './config/main.module.css'
 
@@ -16,7 +16,7 @@ const ByCategory = () => {
 
   return (
     <div className={s.main}>
-      {isLoading ? <Loader /> : <TopHeadlines data={articles} />}
+      {isLoading ? <ArticlesSkeleton /> : <TopHeadlines data={articles} />}
     </div>
   )
 }

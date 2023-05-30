@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Loader from '../../shared/ui/loader'
 import TopHeadlines from '../../widgets/top-headlines'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
+import ArticlesSkeleton from '../../shared/ui/articles-skeleton'
 import s from './config/main.module.css'
 
 const HistoryPage = () => {
@@ -14,7 +15,7 @@ const HistoryPage = () => {
   }, [])
   return (
     <div className={s.main}>
-      {isLoading ? <Loader /> : <TopHeadlines data={history} />}
+      {isLoading ? <ArticlesSkeleton /> : <TopHeadlines data={history} />}
     </div>
   )
 }

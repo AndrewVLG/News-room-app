@@ -8,7 +8,7 @@ const RegistrationInputs: FunctionComponent<RegInputs> = ({ child }) => {
     <>
       {child.map((input: Input, id) => {
         return (
-          <Stack ml={2} spacing={1}>
+          <Stack ml={2} spacing={1} key={id}>
             <RegInput
               variant='outlined'
               color='secondary'
@@ -17,9 +17,10 @@ const RegistrationInputs: FunctionComponent<RegInputs> = ({ child }) => {
               label={input.name}
               onChange={input.handler}
             />
-            {input.alerts?.map((alert) => {
+            {input.alerts?.map((alert, id) => {
               return (
                 <Alert
+                  key={id}
                   sx={{ width: '400px' }}
                   variant='outlined'
                   severity={alert.status}
