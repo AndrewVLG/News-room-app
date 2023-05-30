@@ -23,7 +23,7 @@ export interface Response {
 interface QueryParams {
   country?: Country
   category?: string
-  searchP?: string
+  q?: string
   pageSize?: string
 }
 
@@ -45,11 +45,14 @@ export const newsApi = createApi({
         params: { country, category, apiKey: _API_KEY2 },
       }),
     }),
-    searchNews: builder.query<Response, QueryParams>({
-      query: ({ searchP, pageSize }) => ({
-        url: `everything`,
-        params: { q: searchP, pageSize, apiKey: _API_KEY2 },
+    searchNews: builder.query<Article[], QueryParams>({
+      query: ({ q }) => ({
+        url: `top-headlines`,
+        params: { q, pageSize: 10, apiKey: _API_KEY2 },
       }),
+      transformResponse: (response: Response) => {
+        return response.articles
+      },
     }),
   }),
 })
