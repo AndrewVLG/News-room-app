@@ -1,16 +1,15 @@
 import { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Card,
   CardContent,
   CardMedia,
   Typography,
-  Button,
   CardActionArea,
   CardActions,
 } from '@mui/material'
 import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
-import { Link } from 'react-router-dom'
 
 const ArticleCard: FunctionComponent<Article> = ({
   author,

@@ -12,7 +12,7 @@ import { router } from './app-routing'
 
 const App = () => {
   const { isAuth, user } = useAuth()
-  const { addToHistory, history } = useViewHistory(user, isAuth)
+  const { addToHistory, clearHistory, history } = useViewHistory(user, isAuth)
   const [country, setCountry] = useState<Country>('us')
   const changeCountry = (country: Country) => {
     setCountry(country)
@@ -26,6 +26,7 @@ const App = () => {
         history,
         changeCountry,
         addToHistory,
+        clearHistory,
       }}
     >
       <ThemeProvider theme={theme}>

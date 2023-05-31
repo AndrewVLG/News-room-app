@@ -4,6 +4,7 @@ import { User } from './use-auth'
 
 interface UseViewHistory {
   history: Article[]
+  clearHistory: () => void
   addToHistory: (article: Article) => void
 }
 
@@ -38,6 +39,16 @@ const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
     setHistory((prev) => [...prev, article])
   }
 
-  return { addToHistory, history }
+  const clearHistory = () => {
+    if (isAuth) {
+      localStorage.setItem(
+        `news-app-history-${user?.login}`,
+        JSON.stringify([]),
+      )
+    } else {
+      localStorage.setItem(`news-app-views-history`, JSON.stringify([]))
+    }
+  }
+  return { addToHistory, clearHistory, history }
 }
 export default useViewHistory

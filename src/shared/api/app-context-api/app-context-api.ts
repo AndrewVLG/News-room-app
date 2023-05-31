@@ -13,6 +13,7 @@ interface AppC {
   country: Country
   changeCountry: (country: Country) => void
   addToHistory: (article: Article) => void
+  clearHistory: () => void
 }
 
 export const AppContext = createContext<AppC>({
@@ -20,8 +21,15 @@ export const AppContext = createContext<AppC>({
   user: null,
   country: 'us',
   history: [],
-  changeCountry: (country: Country) => {},
-  addToHistory: (article: Article) => {},
+  changeCountry: (country: Country) => {
+    return
+  },
+  addToHistory: (article: Article) => {
+    return
+  },
+  clearHistory: () => {
+    return
+  },
 })
 
 export const useAppContext = () => {

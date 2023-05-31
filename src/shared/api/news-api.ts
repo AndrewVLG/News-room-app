@@ -41,6 +41,14 @@ export const newsApi = createApi({
         url: `top-headlines`,
         params: { country, apiKey: API_KEY.KEY1 },
       }),
+      transformResponse: (response: Response) => {
+        return {
+          ...response,
+          articles: response.articles.filter((article) =>
+            Boolean(article.urlToImage),
+          ),
+        }
+      },
     }),
     getNewsByCategory: builder.query<Response, QueryParams>({
       query: ({ country, category }) => ({
