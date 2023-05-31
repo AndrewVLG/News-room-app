@@ -11,6 +11,11 @@ import {
 import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 
+const getPublishedDate = (publishedAt: string | null) => {
+  const separator = (publishedAt && publishedAt.indexOf('T')) || 0
+  return publishedAt && publishedAt.slice(0, separator)
+}
+
 const ArticleCard: FunctionComponent<Article> = ({
   author,
   content,
@@ -22,6 +27,7 @@ const ArticleCard: FunctionComponent<Article> = ({
   urlToImage,
 }) => {
   const { addToHistory } = useAppContext()
+  const publishedDate = `Дата публикации: ${getPublishedDate(publishedAt)}`
   return (
     <Card
       onClick={() =>
@@ -43,7 +49,7 @@ const ArticleCard: FunctionComponent<Article> = ({
           component='img'
           height='400'
           image={urlToImage as string}
-          alt='green iguana'
+          alt='news-room'
         />
         <CardContent>
           <Typography gutterBottom variant='h5' component='div'>
@@ -54,8 +60,9 @@ const ArticleCard: FunctionComponent<Article> = ({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions sx={{ justifyContent: 'space-between' }}>
         <Link to={url}>Читать в источнике</Link>
+        <Typography sx={{ color: 'grey' }}>{publishedDate}</Typography>
       </CardActions>
     </Card>
   )
