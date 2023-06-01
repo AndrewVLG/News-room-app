@@ -14,7 +14,7 @@ interface UseAuth {
 const useAuth = (): UseAuth => {
   const localStorageToken = localStorage.getItem('news-app-token')
   const sessionStorageToken = sessionStorage.getItem('news-app-token')
-  const { authComplete } = useSelector((state: RootState) => state.auth)
+  const { loginCompleted } = useSelector((state: RootState) => state.auth)
   const [isAuth, setAuth] = useState<boolean>(false)
   const [user, setUser] = useState<{ login: string; birthDay: string } | null>(
     null,
@@ -25,6 +25,7 @@ const useAuth = (): UseAuth => {
       localStorageAuth
         .authMe(localStorageToken || sessionStorageToken || '')
         .then((response) => {
+          console.log(response)
           setUser(response.user)
           setAuth(response.isAuth)
         })
@@ -32,8 +33,11 @@ const useAuth = (): UseAuth => {
           setUser(null)
           setAuth(response.isAuth)
         })
+    } else {
+      setAuth(false)
+      setUser(null)
     }
-  }, [authComplete])
+  }, [loginCompleted])
   return { isAuth, user }
 }
 export default useAuth

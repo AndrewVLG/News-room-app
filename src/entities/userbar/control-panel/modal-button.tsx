@@ -12,7 +12,7 @@ const ModalBtn = styled(ButtonBase)({
   },
 })
 interface Btn {
-  onHandler: (e: SyntheticEvent<HTMLButtonElement>) => void
+  onHandler: (e?: SyntheticEvent<HTMLButtonElement>) => void
   text: string
 }
 const ModalButton: FunctionComponent<Btn> = ({ onHandler, text }) => {

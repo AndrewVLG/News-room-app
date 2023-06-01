@@ -8,27 +8,31 @@ import LoginButton from '../../entities/userbar/login-button'
 import ControlPanel from '../../entities/userbar/control-panel'
 import ModalWrapper from '../../entities/userbar/modal-wrapper/'
 import InputsGroup from '../../entities/userbar/inputs-group/inputs-group'
+import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
+import ModalButton from '../../entities/userbar/control-panel/modal-button'
 import useLoginActions from './model/use-login-actions'
 
 const Userbar = () => {
+  const { isAuth } = useAppContext()
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const isOpen = Boolean(anchorEl)
-  const { message, login, password, authComplete, isLoading, rememberUser } =
+  const { message, login, password, loginCompleted, isLoading, rememberUser } =
     useSelector((state: RootState) => state.auth)
 
   const {
     clearError,
-    makeAuth,
+    makeLogin,
     writeAuthLogin,
     writeAuthPassword,
     setRemember,
+    logout,
   } = useLoginActions()
 
   useEffect(() => {
-    if (authComplete) {
+    if (loginCompleted) {
       setTimeout(() => setAnchorEl(null), 2000)
     }
-  }, [authComplete])
+  }, [loginCompleted])
 
   useEffect(() => {
     let t: NodeJS.Timeout
@@ -52,11 +56,21 @@ const Userbar = () => {
   const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
     writeAuthPassword(e.currentTarget.value)
   }
-  const makeLogin = () => {
-    makeAuth({ login, password })
+  const userLogin = () => {
+    makeLogin({ login, password })
   }
   const memUser = (e: ChangeEvent<HTMLInputElement>) => {
     setRemember(e.target.checked)
+  }
+  const userLogout = () => {
+    logout()
+  }
+  const renderButton = (): JSX.Element => {
+    return isAuth ? (
+      <ModalButton text='Выход' onHandler={userLogout} />
+    ) : (
+      <ModalButton text='Вход' onHandler={userLogin} />
+    )
   }
   return (
     <UserbarWrapper>
@@ -67,9 +81,9 @@ const Userbar = () => {
           handleChangePassword={changePassword}
         />
         <ControlPanel
-          authCompleat={authComplete}
+          renderButton={renderButton}
+          authCompleat={loginCompleted}
           handleSwitch={memUser}
-          handleClick={makeLogin}
           isRemember={rememberUser}
           isLoading={isLoading}
         />

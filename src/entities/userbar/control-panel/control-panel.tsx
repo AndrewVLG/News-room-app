@@ -5,23 +5,20 @@ import {
   FormControlLabel,
   Stack,
   Switch,
-  Button,
 } from '@mui/material'
-import ModalButton from './modal-button'
 
 interface Control {
   authCompleat: boolean
   isRemember: boolean
   isLoading: boolean
+  renderButton: () => JSX.Element
   handleSwitch: (e: ChangeEvent<HTMLInputElement>) => void
-  handleClick: () => void
 }
 
 const ControlPanel: FunctionComponent<Control> = ({
-  authCompleat,
   isLoading,
   isRemember,
-  handleClick,
+  renderButton,
   handleSwitch,
 }) => {
   return (
@@ -38,14 +35,7 @@ const ControlPanel: FunctionComponent<Control> = ({
         label='Запомнить меня'
       />
 
-      {isLoading ? (
-        <CircularProgress size={25} />
-      ) : (
-        <ModalButton
-          onHandler={handleClick}
-          text={authCompleat ? 'Выйти' : 'Вход'}
-        />
-      )}
+      {isLoading ? <CircularProgress size={25} /> : renderButton()}
       <Link to='history'>История просмотров</Link>
       <Link to='registration'>Регистрация</Link>
     </Stack>
