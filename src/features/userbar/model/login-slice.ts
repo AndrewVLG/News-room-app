@@ -5,7 +5,7 @@ interface User {
   login: string | null
   password: string | null
 }
-export const makeAuth = RTK.createAsyncThunk(
+export const makeLogin = RTK.createAsyncThunk(
   'login-slice/makeAuth',
   async ({ login, password }: User) => {
     const response: Response = await new LocalStorageAuth().authorization(
@@ -18,19 +18,21 @@ export const makeAuth = RTK.createAsyncThunk(
 )
 
 interface Init {
+  token: string | null
   isLoading: boolean
   login: string | null
   password: string | null
   message: string | null
-  authComplete: boolean
+  loginCompleted: boolean
   rememberUser: boolean
 }
 const initialState: Init = {
+  token: null,
   isLoading: false,
   login: '',
   password: '',
   message: null,
-  authComplete: false,
+  loginCompleted: false,
   rememberUser: false,
 }
 const loginSlice = RTK.createSlice({
@@ -49,23 +51,27 @@ const loginSlice = RTK.createSlice({
     setRemember: (state, action: RTK.PayloadAction<boolean>) => {
       state.rememberUser = action.payload
     },
+    logout: (state) => {
+      state.loginCompleted = false
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
-      makeAuth.fulfilled,
+      makeLogin.fulfilled,
       (state, action: RTK.PayloadAction<Response>) => {
+        state.token = action.payload.t
         state.message = 'Вход выполнен успешно!'
-        state.authComplete = action.payload.isAuth
+        state.loginCompleted = action.payload.isAuth
         state.isLoading = false
       },
     )
 
-    builder.addCase(makeAuth.pending, (state) => {
+    builder.addCase(makeLogin.pending, (state) => {
       state.isLoading = true
       state.message = null
     })
 
-    builder.addCase(makeAuth.rejected, (state) => {
+    builder.addCase(makeLogin.rejected, (state) => {
       state.message = 'Неверный логин или пароль'
       state.isLoading = false
     })
