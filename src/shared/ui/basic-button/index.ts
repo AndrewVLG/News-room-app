@@ -5,6 +5,7 @@ export const BasicButton = styled(ButtonBase)({
   width: '80px',
   height: '80px',
   marginLeft: '10px',
+  position: 'relative',
 
   '&:hover': {
     backgroundColor: '#FF1E0C',

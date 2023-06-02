@@ -1,19 +1,25 @@
 import { useState, useEffect, ChangeEventHandler } from 'react'
-import { useNavigate } from 'react-router'
 
 interface UseDebounce {
   value: string
   handler?: ChangeEventHandler
 }
 
-export const useDebounce = (v: string, delay: number): UseDebounce => {
+export const useDebounce = (
+  v: string,
+  delay: number,
+  callback?: (value: string) => void,
+): UseDebounce => {
   const [value, setValue] = useState<string>('')
-  const navigate = useNavigate()
+
   useEffect(() => {
-    let timer: NodeJS.Timeout
-    timer = setTimeout(() => setValue(v), delay)
+    const timer: NodeJS.Timeout = setTimeout(() => {
+      setValue(v)
+      callback && callback(v)
+    }, delay)
 
     return () => clearTimeout(timer)
   }, [v])
+
   return { value }
 }

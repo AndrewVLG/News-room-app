@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Article } from '../api/news-api'
 import { User } from './use-auth'
 
 interface UseViewHistory {
-  history: Article[]
+  history: string[]
   clearHistory: () => void
-  addToHistory: (article: Article) => void
+  addToHistory: (article: string) => void
 }
 
 const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
-  const [history, setHistory] = useState<Article[]>([])
+  const [history, setHistory] = useState<string[]>([])
   useEffect(() => {
     if (user) {
       const appNewsUserHistory = localStorage.getItem(
@@ -22,21 +21,27 @@ const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
       const data = JSON.parse(appNewsViewsHistory || 'null')
       setHistory(data || [])
     }
-  }, [user])
+  }, [user, isAuth])
 
-  const addToHistory = (article: Article) => {
+  const addToHistory = (searchValue: string) => {
+    if (history.indexOf(searchValue) > -1) {
+      return
+    }
+
+    if (history.length >= 10) {
+      setHistory((prev) => [searchValue, ...prev.slice(0, 11)])
+    } else {
+      setHistory((prev) => [searchValue, ...prev])
+    }
+
     if (isAuth) {
       localStorage.setItem(
         `news-app-history-${user?.login}`,
-        JSON.stringify([...history, article]),
+        JSON.stringify(history),
       )
     } else {
-      localStorage.setItem(
-        `news-app-views-history`,
-        JSON.stringify([...history, article]),
-      )
+      localStorage.setItem(`news-app-views-history`, JSON.stringify(history))
     }
-    setHistory((prev) => [...prev, article])
   }
 
   const clearHistory = () => {

@@ -9,7 +9,6 @@ import {
   CardActions,
 } from '@mui/material'
 import { Article } from '../../shared/api/news-api'
-import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 
 const getPublishedDate = (publishedAt: string | null) => {
   const separator = (publishedAt && publishedAt.indexOf('T')) || 0
@@ -26,24 +25,9 @@ const ArticleCard: FunctionComponent<Article> = ({
   url,
   urlToImage,
 }) => {
-  const { addToHistory } = useAppContext()
   const publishedDate = `Дата публикации: ${getPublishedDate(publishedAt)}`
   return (
-    <Card
-      onClick={() =>
-        addToHistory({
-          author,
-          content,
-          description,
-          publishedAt,
-          source,
-          title,
-          url,
-          urlToImage,
-        })
-      }
-      sx={{ maxWidth: 700 }}
-    >
+    <Card sx={{ maxWidth: 700 }}>
       <CardActionArea>
         <CardMedia
           component='img'

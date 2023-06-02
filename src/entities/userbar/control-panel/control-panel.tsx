@@ -36,8 +36,7 @@ const ControlPanel: FunctionComponent<Control> = ({
       />
 
       {isLoading ? <CircularProgress size={25} /> : renderButton()}
-      <Link to='history'>История просмотров</Link>
-      <Link to='registration'>Регистрация</Link>
+      <Link to='/registration'>Регистрация</Link>
     </Stack>
   )
 }
