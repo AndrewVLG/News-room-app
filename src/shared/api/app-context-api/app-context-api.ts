@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react'
-import { Article, Country } from '../news-api'
+import { Country } from '../news-api'
 
 interface User {
   login: string
@@ -9,10 +9,10 @@ interface User {
 interface AppC {
   isAuth: boolean
   user: User | null
-  history: Article[]
+  history: string[]
   country: Country
   changeCountry: (country: Country) => void
-  addToHistory: (article: Article) => void
+  addToHistory: (searchValue: string) => void
   clearHistory: () => void
 }
 
@@ -24,7 +24,7 @@ export const AppContext = createContext<AppC>({
   changeCountry: (country: Country) => {
     return
   },
-  addToHistory: (article: Article) => {
+  addToHistory: (searchValue: string) => {
     return
   },
   clearHistory: () => {

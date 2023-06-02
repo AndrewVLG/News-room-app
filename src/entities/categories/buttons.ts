@@ -13,11 +13,11 @@ const buttons: Button[] = [
   },
   {
     name: 'Здоровье',
-    href: 'health',
+    href: '/health',
   },
   {
     name: 'Развлечение',
-    href: 'entertainment',
+    href: '/entertainment',
   },
   {
     name: 'Наука',

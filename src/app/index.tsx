@@ -17,7 +17,6 @@ const App = () => {
   const changeCountry = (country: Country) => {
     setCountry(country)
   }
-
   return (
     <AppContext.Provider
       value={{
