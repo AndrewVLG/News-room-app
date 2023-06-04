@@ -19,7 +19,7 @@ class LocalStorageAuth {
       db.pushUser({ login, password, birthDay })
       const t = Date.now()
       return new Promise((resolve) => {
-        setTimeout(() => resolve({ isAuth: true, t: `${login}${t}` }), 1000)
+        setTimeout(() => resolve({ isAuth: true, t: `${login}:${t}` }), 1000)
       })
     }
   }
@@ -38,7 +38,7 @@ class LocalStorageAuth {
     const t = Date.now()
     return new Promise<Response>((resolve, rejected) => {
       if (isAuth) {
-        setTimeout(() => resolve({ isAuth, t: `${user?.login}${t}` }), 1000)
+        setTimeout(() => resolve({ isAuth, t: `${user?.login}:${t}` }), 1000)
       } else {
         setTimeout(() => rejected({ t: null, isAuth: false }), 1000)
       }
@@ -56,8 +56,9 @@ class LocalStorageAuth {
     }
     const t = Date.now()
     const tokenLife = 180000
-    const authTime = Number(token.match(/\d/g)?.join(''))
-    const login = token.match(/\D/g)?.join('') as string
+    const separator = token.indexOf(':')
+    const authTime = Number(token.slice(separator + 1))
+    const login = token.slice(0, separator) as string
     const userIsFound = db.findUser(login)
     const authOk = t - authTime < tokenLife
     return new Promise((resolve, rejected) => {

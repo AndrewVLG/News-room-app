@@ -37,10 +37,13 @@ const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
     if (isAuth) {
       localStorage.setItem(
         `news-app-history-${user?.login}`,
-        JSON.stringify(history),
+        JSON.stringify([searchValue, ...history]),
       )
     } else {
-      localStorage.setItem(`news-app-views-history`, JSON.stringify(history))
+      localStorage.setItem(
+        `news-app-views-history`,
+        JSON.stringify([searchValue, ...history]),
+      )
     }
   }
 
