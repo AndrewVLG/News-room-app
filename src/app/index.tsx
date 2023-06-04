@@ -1,7 +1,9 @@
 import { Suspense, useState } from 'react'
 import { RouterProvider } from 'react-router'
+import { withErrorBoundary } from 'react-error-boundary'
 import { ThemeProvider } from '@mui/material'
 
+import ErrorPage from '../pages/error-page'
 import { theme } from '../shared/config/theme'
 import Loader from '../shared/ui/loader'
 import useAuth from '../shared/hooks/use-auth'
@@ -37,4 +39,7 @@ const App = () => {
     </AppContext.Provider>
   )
 }
-export default App
+
+export default withErrorBoundary(App, {
+  FallbackComponent: () => <ErrorPage />,
+})
