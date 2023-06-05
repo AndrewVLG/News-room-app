@@ -8,12 +8,14 @@ import LoginButton from '../../entities/userbar/login-button'
 import ControlPanel from '../../entities/userbar/control-panel'
 import ModalWrapper from '../../entities/userbar/modal-wrapper/'
 import InputsGroup from '../../entities/userbar/inputs-group/inputs-group'
-import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
+import Profile from '../../entities/userbar/profile'
 import ModalButton from '../../entities/userbar/control-panel/modal-button'
+import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import useLoginActions from './model/use-login-actions'
 
 const Userbar = () => {
-  const { isAuth } = useAppContext()
+  const { isAuth, user } = useAppContext()
+  console.log(user)
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const isOpen = Boolean(anchorEl)
   const { message, login, password, loginCompleted, isLoading, rememberUser } =
@@ -76,10 +78,14 @@ const Userbar = () => {
     <UserbarWrapper>
       <LoginButton onHandler={openMenu} />
       <ModalWrapper anchor={anchorEl} isOpen={isOpen} handleClick={closeMenu}>
-        <InputsGroup
-          handleChangeLogin={changeLogin}
-          handleChangePassword={changePassword}
-        />
+        {user ? (
+          <Profile user={user} />
+        ) : (
+          <InputsGroup
+            handleChangeLogin={changeLogin}
+            handleChangePassword={changePassword}
+          />
+        )}
         <ControlPanel
           renderButton={renderButton}
           authCompleat={loginCompleted}

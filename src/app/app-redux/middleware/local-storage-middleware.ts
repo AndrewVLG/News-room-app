@@ -16,6 +16,7 @@ export const localStorageMiddleware: R.Middleware<null, RootState> =
     if (action.type === 'login-slice/logout') {
       localStorage.removeItem('news-app-token')
       sessionStorage.removeItem('news-app-token')
+      window.location.reload()
     }
     return next(action)
   }
