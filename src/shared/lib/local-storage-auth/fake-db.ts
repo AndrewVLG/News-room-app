@@ -2,6 +2,7 @@ interface User {
   login: string
   password: string
   birthDay: string
+  favorites?: string[]
 }
 export interface FakeDB {
   init: () => void
@@ -33,7 +34,10 @@ class FakeDatabase implements FakeDB {
     birthDay: string | null
   }) {
     const users = JSON.parse(localStorage.getItem('users') as string)
-    localStorage.setItem('users', JSON.stringify([...users, user]))
+    localStorage.setItem(
+      'users',
+      JSON.stringify([...users, { ...user, favorites: [] }]),
+    )
   }
 }
 export default FakeDatabase

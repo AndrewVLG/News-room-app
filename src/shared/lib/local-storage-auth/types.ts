@@ -4,7 +4,7 @@ export interface Response {
 }
 export interface AuthMeResponse {
   isAuth: boolean
-  user: { login: string; birthDay: string } | null
+  user: { login: string; birthDay: string; favorites: string[] } | null
 }
 export interface User {
   login: string | null

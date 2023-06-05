@@ -6,6 +6,7 @@ const localStorageAuth = new LocalStorageAuth()
 export interface User {
   login: string
   birthDay: string
+  favorites?: string[]
 }
 interface UseAuth {
   isAuth: boolean

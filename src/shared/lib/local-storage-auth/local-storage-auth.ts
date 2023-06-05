@@ -70,6 +70,7 @@ class LocalStorageAuth {
               user: {
                 login: userIsFound.login,
                 birthDay: userIsFound.birthDay,
+                favorites: userIsFound.favorites as [],
               },
             }),
           1000,
