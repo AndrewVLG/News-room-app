@@ -4,7 +4,7 @@ import { Country } from '../news-api'
 interface User {
   login: string
   birthDay: string
-  favorites: string[]
+  favorites?: string[]
 }
 
 interface AppC {

@@ -70,7 +70,9 @@ class LocalStorageAuth {
               user: {
                 login: userIsFound.login,
                 birthDay: userIsFound.birthDay,
-                favorites: userIsFound.favorites as [],
+                favorites: userIsFound.favorites?.map(
+                  (el) => el.href,
+                ) as string[],
               },
             }),
           1000,
@@ -87,5 +89,15 @@ class LocalStorageAuth {
       }
     })
   }
+  addFavorite(login: string, favorite: { title: string; href: string }) {
+    const user = db.findUser(login)
+    if (!user) {
+      return
+    }
+
+    user.favorites?.push(favorite)
+    db.setUser(user)
+  }
 }
+
 export default LocalStorageAuth
