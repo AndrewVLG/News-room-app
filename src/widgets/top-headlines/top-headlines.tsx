@@ -21,7 +21,6 @@ const checkFavorite = (data: Article[], favorites: string[]) => {
     }
   }, [])
 }
-g
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
   const { user, isAuth } = useAppContext()
 
