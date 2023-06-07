@@ -1,4 +1,4 @@
-import { ImportantArticle } from '../../../widgets/top-headlines/top-headlines'
+import { FavoriteArticle } from '../../../widgets/top-headlines/top-headlines'
 import FakeDatabase from './fake-db'
 import { AuthMeResponse, Response, User } from './types'
 
@@ -95,7 +95,7 @@ class LocalStorageAuth {
 
   /** ------------------------ **/
 
-  addFavorite(login: string, favorite: ImportantArticle) {
+  addFavorite(login: string, favorite: FavoriteArticle) {
     const user = db.findUser(login)
     if (!user) {
       return
@@ -112,7 +112,7 @@ class LocalStorageAuth {
 
   /** ------------------------ **/
 
-  getFavorites(login: string): Promise<ImportantArticle[] | undefined> {
+  getFavorites(login: string): Promise<FavoriteArticle[] | undefined> {
     const user = db.findUser(login)
     const articles = db.getAllArticles()
     if (!user) {
@@ -120,7 +120,7 @@ class LocalStorageAuth {
         setTimeout(() => rejected(), 1000)
       })
     }
-    const response = user.favorites?.reduce<ImportantArticle[]>(
+    const response = user.favorites?.reduce<FavoriteArticle[]>(
       (result, current: string) => {
         const article = articles.find((item) => item.url === current)
         if (article) {

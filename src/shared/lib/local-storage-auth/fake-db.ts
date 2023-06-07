@@ -1,4 +1,4 @@
-import { ImportantArticle } from '../../../widgets/top-headlines/top-headlines'
+import { FavoriteArticle } from '../../../widgets/top-headlines/top-headlines'
 import { Article } from '../../api/news-api'
 
 interface User {
@@ -72,8 +72,8 @@ class FakeDatabase implements FakeDB {
 
   /** --------------------- **/
 
-  addArticle(article: ImportantArticle) {
-    const allArticles: ImportantArticle[] = JSON.parse(
+  addArticle(article: FavoriteArticle) {
+    const allArticles: FavoriteArticle[] = JSON.parse(
       localStorage.getItem('news-app-articles') as string,
     )
 
@@ -90,7 +90,7 @@ class FakeDatabase implements FakeDB {
       JSON.stringify([...allArticles, { ...article, isFavorite: false }]),
     )
   }
-  getAllArticles(): ImportantArticle[] {
+  getAllArticles(): FavoriteArticle[] {
     return JSON.parse(localStorage.getItem('news-app-articles') as string)
   }
 }

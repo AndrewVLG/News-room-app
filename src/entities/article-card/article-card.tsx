@@ -8,13 +8,14 @@ import {
   CardActionArea,
   CardActions,
 } from '@mui/material'
-import { ImportantArticle } from '../../widgets/top-headlines/top-headlines'
+import { FavoriteArticle } from '../../widgets/top-headlines/top-headlines'
 import { getPublishedDate } from '../../shared/util/get-published-date'
 import FavoriteButton from './favorite-button'
 
 interface Props {
-  article: ImportantArticle
-  addToFavorite: () => void
+  article: FavoriteArticle
+  addToFavoritesList: () => void
+  deleteFromFavorites: () => void
   isAuth: boolean
 }
 const ArticleCard: FunctionComponent<Props> = ({
@@ -26,14 +27,19 @@ const ArticleCard: FunctionComponent<Props> = ({
     url,
     urlToImage,
   },
-  addToFavorite,
+  addToFavoritesList,
+  deleteFromFavorites,
   isAuth,
 }) => {
   const [isFavorite, setFavorite] = useState<boolean>(false)
   const publishedDate = `Дата публикации: ${getPublishedDate(publishedAt)}`
-  const setImportantState = () => {
-    setFavorite(true)
-    addToFavorite()
+  const addToFavorites = () => {
+    setFavorite((prev) => !prev)
+    if (!isFavorite) {
+      addToFavoritesList()
+    } else {
+      deleteFromFavorites()
+    }
   }
   useEffect(() => {
     setFavorite(isFav)
@@ -61,7 +67,7 @@ const ArticleCard: FunctionComponent<Props> = ({
         <Typography sx={{ color: 'grey' }}>{publishedDate}</Typography>
         {isAuth && (
           <FavoriteButton
-            handleClick={setImportantState}
+            handleClick={addToFavorites}
             isFavorite={isFavorite}
           />
         )}
