@@ -1,9 +1,13 @@
+import { ImportantArticle } from '../../../widgets/top-headlines/top-headlines'
+import { Article } from '../../api/news-api'
+
 interface User {
   login: string
   password: string
   birthDay: string
-  favorites?: { title: string; href: string }[]
+  favorites?: string[]
 }
+
 export interface FakeDB {
   init: () => void
   findUser: (login: string) => User | undefined
@@ -11,11 +15,18 @@ export interface FakeDB {
 
 class FakeDatabase implements FakeDB {
   init() {
-    if (localStorage.getItem('users')) {
+    if (
+      localStorage.getItem('users') &&
+      localStorage.getItem('news-app-articles')
+    ) {
       return
     }
     localStorage.setItem('users', JSON.stringify([]))
+    localStorage.setItem('news-app-articles', JSON.stringify([]))
   }
+
+  /** --------------------- **/
+
   findUser(login: string | null) {
     if (!localStorage.getItem('users')) {
       return
@@ -25,9 +36,15 @@ class FakeDatabase implements FakeDB {
       return user
     }
   }
+
+  /**------------------------**/
+
   getAllUsers(): User[] {
     return JSON.parse(localStorage.getItem('users') as string)
   }
+
+  /** --------------------- **/
+
   pushUser(user: {
     login: string | null
     password: string | null
@@ -39,7 +56,10 @@ class FakeDatabase implements FakeDB {
       JSON.stringify([...users, { ...user, favorites: [] }]),
     )
   }
-  setUser(user: User) {
+
+  /** --------------------- **/
+
+  updateUser(user: User) {
     const users = JSON.parse(localStorage.getItem('users') as string)
     const userId = users.findIndex((u: User) => u.login === user.login)
     const newUsersList = [
@@ -48,6 +68,30 @@ class FakeDatabase implements FakeDB {
       ...users.slice(userId + 1),
     ]
     localStorage.setItem('users', JSON.stringify(newUsersList))
+  }
+
+  /** --------------------- **/
+
+  addArticle(article: ImportantArticle) {
+    const allArticles: ImportantArticle[] = JSON.parse(
+      localStorage.getItem('news-app-articles') as string,
+    )
+
+    const isFound = allArticles.find(
+      (item: Article) => item.url === article.url,
+    )
+
+    if (isFound) {
+      return
+    }
+
+    localStorage.setItem(
+      'news-app-articles',
+      JSON.stringify([...allArticles, { ...article, isFavorite: false }]),
+    )
+  }
+  getAllArticles(): ImportantArticle[] {
+    return JSON.parse(localStorage.getItem('news-app-articles') as string)
   }
 }
 export default FakeDatabase

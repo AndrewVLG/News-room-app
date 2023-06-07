@@ -1,3 +1,4 @@
+import { ImportantArticle } from '../../../widgets/top-headlines/top-headlines'
 import FakeDatabase from './fake-db'
 import { AuthMeResponse, Response, User } from './types'
 
@@ -24,6 +25,8 @@ class LocalStorageAuth {
     }
   }
 
+  /** ------------------------ **/
+
   authorization(
     login: string | null,
     password: string | null,
@@ -45,6 +48,8 @@ class LocalStorageAuth {
     })
   }
 
+  /** ------------------------ **/
+
   authMe(token: string): Promise<AuthMeResponse> {
     if (!token) {
       return new Promise((_, rejected) => {
@@ -55,7 +60,7 @@ class LocalStorageAuth {
       })
     }
     const t = Date.now()
-    const tokenLife = 180000
+    const tokenLife = 1800000
     const separator = token.indexOf(':')
     const authTime = Number(token.slice(separator + 1))
     const login = token.slice(0, separator) as string
@@ -70,9 +75,7 @@ class LocalStorageAuth {
               user: {
                 login: userIsFound.login,
                 birthDay: userIsFound.birthDay,
-                favorites: userIsFound.favorites?.map(
-                  (el) => el.href,
-                ) as string[],
+                favorites: userIsFound.favorites as string[],
               },
             }),
           1000,
@@ -89,14 +92,48 @@ class LocalStorageAuth {
       }
     })
   }
-  addFavorite(login: string, favorite: { title: string; href: string }) {
+
+  /** ------------------------ **/
+
+  addFavorite(login: string, favorite: ImportantArticle) {
     const user = db.findUser(login)
     if (!user) {
       return
     }
 
-    user.favorites?.push(favorite)
-    db.setUser(user)
+    if (user.favorites?.includes(favorite.url)) {
+      return
+    }
+
+    user.favorites?.push(favorite.url)
+    db.updateUser(user)
+    db.addArticle(favorite)
+  }
+
+  /** ------------------------ **/
+
+  getFavorites(login: string): Promise<ImportantArticle[] | undefined> {
+    const user = db.findUser(login)
+    const articles = db.getAllArticles()
+    if (!user) {
+      return new Promise((_, rejected) => {
+        setTimeout(() => rejected(), 1000)
+      })
+    }
+    const response = user.favorites?.reduce<ImportantArticle[]>(
+      (result, current: string) => {
+        const article = articles.find((item) => item.url === current)
+        if (article) {
+          return [...result, { ...article, isFavorite: true }]
+        } else {
+          return result
+        }
+      },
+      [],
+    )
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(response), 1000)
+    })
   }
 }
 

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react'
+import { FunctionComponent, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Card,
@@ -8,36 +8,36 @@ import {
   CardActionArea,
   CardActions,
 } from '@mui/material'
-import { Star } from '@mui/icons-material'
 import { ImportantArticle } from '../../widgets/top-headlines/top-headlines'
+import { getPublishedDate } from '../../shared/util/get-published-date'
+import FavoriteButton from './favorite-button'
 
-const getPublishedDate = (publishedAt: string | null) => {
-  const separator = (publishedAt && publishedAt.indexOf('T')) || 0
-  return publishedAt && publishedAt.slice(0, separator)
-}
 interface Props {
   article: ImportantArticle
-  addToFavorite: (login: string, fav: { title: string; href: string }) => void
+  addToFavorite: () => void
+  isAuth: boolean
 }
 const ArticleCard: FunctionComponent<Props> = ({
   article: {
-    author,
-    content,
     description,
     isFavorite: isFav,
     publishedAt,
-    source,
     title,
     url,
     urlToImage,
   },
   addToFavorite,
+  isAuth,
 }) => {
-  const [isImportant, setImportant] = useState<boolean>(isFav)
+  const [isFavorite, setFavorite] = useState<boolean>(false)
   const publishedDate = `Дата публикации: ${getPublishedDate(publishedAt)}`
   const setImportantState = () => {
-    setImportant((prev) => !prev)
+    setFavorite(true)
+    addToFavorite()
   }
+  useEffect(() => {
+    setFavorite(isFav)
+  }, [isFav])
   return (
     <Card sx={{ maxWidth: 700 }}>
       <CardActionArea>
@@ -58,14 +58,13 @@ const ArticleCard: FunctionComponent<Props> = ({
       </CardActionArea>
       <CardActions sx={{ justifyContent: 'space-between' }}>
         <Link to={url}>Читать в источнике</Link>
-        {isImportant && (
-          <Star
-            sx={{ color: 'red' }}
-            fontSize='large'
-            onClick={setImportantState}
+        <Typography sx={{ color: 'grey' }}>{publishedDate}</Typography>
+        {isAuth && (
+          <FavoriteButton
+            handleClick={setImportantState}
+            isFavorite={isFavorite}
           />
         )}
-        <Typography sx={{ color: 'grey' }}>{publishedDate}</Typography>
       </CardActions>
     </Card>
   )

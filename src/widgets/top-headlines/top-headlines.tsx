@@ -1,23 +1,20 @@
-import { FunctionComponent, useMemo } from 'react'
+import { FunctionComponent, useEffect, useMemo } from 'react'
 import { Stack } from '@mui/material'
-import { Article } from '../../shared/api/news-api'
 import ArticleCard from '../../entities/article-card/article-card'
+import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import LocalStorageAuth from '../../shared/lib/local-storage-auth/local-storage-auth'
 interface Props {
   data: Article[]
 }
-const fakeFavorites = [
-  'https://apnews.com/article/india-passenger-train-derail-deadly-accident-dd0c82012f9e14016b58d09eb3adec2d',
-  'https://abcnews.go.com/US/wireStory/7-shot-1-fatally-chicago-gunfire-erupts-amid-99822717',
-]
+
 export interface ImportantArticle extends Article {
   isFavorite: boolean
 }
 
-const checkImportant = (data: Article[], favorites: string[]) => {
+const checkFavorite = (data: Article[], favorites: string[]) => {
   return data.reduce<ImportantArticle[]>((articles, current) => {
-    if (fakeFavorites.includes(current.url)) {
+    if (favorites.includes(current.url)) {
       return [...articles, { ...current, isFavorite: true }]
     } else {
       return [...articles, { ...current, isFavorite: false }]
@@ -25,20 +22,32 @@ const checkImportant = (data: Article[], favorites: string[]) => {
   }, [])
 }
 const fakeServer = new LocalStorageAuth()
-const addToFavorite = (login: string, fav: { title: string; href: string }) => {
-  fakeServer.addFavorite(login, fav)
-}
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
-  const { user } = useAppContext()
+  const { user, isAuth } = useAppContext()
   const articles = useMemo(
-    () => checkImportant(data, user?.favorites as string[]),
-    [data],
+    () => checkFavorite(data, user?.favorites || []),
+    [data, isAuth],
   )
-
+  const addFavorite = (article: ImportantArticle) => {
+    fakeServer.addFavorite(user?.login as string, article)
+  }
+  useEffect(() => {
+    if (user?.login) {
+      fakeServer
+        .getFavorites(user?.login as string)
+        .then((data) => console.log(data))
+        .catch((data) => console.log(data))
+    }
+  }, [user])
   return (
     <Stack spacing={2}>
       {articles.map((article: ImportantArticle, id: number) => (
-        <ArticleCard article={article} addToFavorite={addToFavorite} key={id} />
+        <ArticleCard
+          article={article}
+          addToFavorite={() => addFavorite(article)}
+          isAuth={isAuth}
+          key={id}
+        />
       ))}
     </Stack>
   )
