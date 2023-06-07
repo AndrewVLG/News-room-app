@@ -21,30 +21,18 @@ const checkFavorite = (data: Article[], favorites: string[]) => {
     }
   }, [])
 }
-const fakeServer = new LocalStorageAuth()
+g
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
   const { user, isAuth } = useAppContext()
-  const articles = useMemo(
-    () => checkFavorite(data, user?.favorites || []),
-    [data, isAuth],
-  )
-  const addFavorite = (article: ImportantArticle) => {
-    fakeServer.addFavorite(user?.login as string, article)
-  }
-  useEffect(() => {
-    if (user?.login) {
-      fakeServer
-        .getFavorites(user?.login as string)
-        .then((data) => console.log(data))
-        .catch((data) => console.log(data))
-    }
-  }, [user])
+
   return (
     <Stack spacing={2}>
-      {articles.map((article: ImportantArticle, id: number) => (
+      {[].map((article: ImportantArticle, id: number) => (
         <ArticleCard
           article={article}
-          addToFavorite={() => addFavorite(article)}
+          addToFavorite={() => {
+            return
+          }}
           isAuth={isAuth}
           key={id}
         />
