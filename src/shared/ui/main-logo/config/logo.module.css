@@ -1,4 +1,4 @@
-.logo-module {
+.logo-main {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -12,4 +12,15 @@
     background-color: #FF1E0C;
     text-shadow: black 1px 0 10px;
 
+}
+.logo-secondary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 185px;
+    height: 80px;
+    font-size: 30px;
+    color: #FF1E0C;
+    border: #FF1E0C solid 2px;
 }
