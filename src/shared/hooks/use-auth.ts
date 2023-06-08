@@ -10,6 +10,7 @@ export interface User {
 }
 interface UseAuth {
   isAuth: boolean
+  refresh: (fn: any) => void
   user: User | null
 }
 const useAuth = (): UseAuth => {
@@ -26,7 +27,6 @@ const useAuth = (): UseAuth => {
       localStorageAuth
         .authMe(localStorageToken || sessionStorageToken || '')
         .then((response) => {
-          console.log(response)
           setUser(response.user)
           setAuth(response.isAuth)
         })
@@ -39,6 +39,16 @@ const useAuth = (): UseAuth => {
       setUser(null)
     }
   }, [loginCompleted])
-  return { isAuth, user }
+  const refresh = (fn: any) => {
+    localStorageAuth
+      .authMe(sessionStorageToken || localStorageToken || '')
+      .then((response) => {
+        fn(response.user)
+      })
+      .catch((response) => {
+        fn(null)
+      })
+  }
+  return { isAuth, user, refresh }
 }
 export default useAuth

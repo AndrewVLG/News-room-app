@@ -13,12 +13,13 @@ import { Country } from '../shared/api/news-api'
 import { router } from './app-routing'
 
 const App = () => {
-  const { isAuth, user } = useAuth()
+  const { isAuth, user, refresh } = useAuth()
   const { addToHistory, clearHistory, history } = useViewHistory(user, isAuth)
   const [country, setCountry] = useState<Country>('us')
   const changeCountry = (country: Country) => {
     setCountry(country)
   }
+  console.log('render')
   return (
     <AppContext.Provider
       value={{
@@ -26,6 +27,7 @@ const App = () => {
         isAuth,
         country,
         history,
+        refresh,
         changeCountry,
         addToHistory,
         clearHistory,

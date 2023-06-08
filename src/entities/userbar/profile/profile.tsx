@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Avatar, Typography } from '@mui/material'
 import { User } from '../../../shared/hooks/use-auth'
 import s from './config/profile.module.css'
@@ -16,6 +17,9 @@ const Profile = ({ user }: { user: User }) => {
         <Typography sx={{ color: '#1E90FF' }}>Дата рождения:</Typography>
         <Typography sx={{ color: '#FF1E0C' }}>{birthDay}</Typography>
       </div>
+      <Link style={{ marginLeft: '25%' }} to='favorites'>
+        Избранное
+      </Link>
     </div>
   )
 }

@@ -15,7 +15,6 @@ import useLoginActions from './model/use-login-actions'
 
 const Userbar = () => {
   const { isAuth, user } = useAppContext()
-  console.log(user)
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
   const isOpen = Boolean(anchorEl)
   const { message, login, password, loginCompleted, isLoading, rememberUser } =

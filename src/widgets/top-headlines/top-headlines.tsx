@@ -1,19 +1,22 @@
-import { FunctionComponent, useEffect, useMemo } from 'react'
+import { FunctionComponent, useMemo, useState, useEffect } from 'react'
 import { Stack } from '@mui/material'
+
 import ArticleCard from '../../entities/article-card/article-card'
 import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
-import LocalStorageAuth from '../../shared/lib/local-storage-auth/local-storage-auth'
+import { useFavoritesAction } from '../../features/favorites/model/use-favorites-action'
+import { User } from '../../shared/hooks/use-auth'
+
 interface Props {
   data: Article[]
 }
 
-export interface ImportantArticle extends Article {
+export interface FavoriteArticle extends Article {
   isFavorite: boolean
 }
 
 const checkFavorite = (data: Article[], favorites: string[]) => {
-  return data.reduce<ImportantArticle[]>((articles, current) => {
+  return data.reduce<FavoriteArticle[]>((articles, current) => {
     if (favorites.includes(current.url)) {
       return [...articles, { ...current, isFavorite: true }]
     } else {
@@ -22,15 +25,27 @@ const checkFavorite = (data: Article[], favorites: string[]) => {
   }, [])
 }
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
-  const { user, isAuth } = useAppContext()
-
+  const { isAuth, refresh } = useAppContext()
+  const [user, setUser] = useState<User | null>(null)
+  const articles = useMemo(
+    () => checkFavorite(data, user?.favorites || []),
+    [data, user],
+  )
+  const { addToFavorites, deleteFavorite } = useFavoritesAction()
+  useEffect(() => refresh(setUser), [isAuth])
+  console.log(user)
   return (
     <Stack spacing={2}>
-      {[].map((article: ImportantArticle, id: number) => (
+      {articles.map((article: FavoriteArticle, id: number) => (
         <ArticleCard
           article={article}
-          addToFavorite={() => {
-            return
+          addToFavoritesList={() => {
+            addToFavorites({ login: user?.login as string, fav: article })
+            refresh(setUser)
+          }}
+          deleteFromFavorites={() => {
+            deleteFavorite({ login: user?.login as string, fav: article })
+            refresh(setUser)
           }}
           isAuth={isAuth}
           key={id}

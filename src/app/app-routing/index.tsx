@@ -5,6 +5,7 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom'
 import SearchPage from '../../pages/search-page'
+import FavoritesPage from '../../pages/favorites'
 
 const Layout = lazy(() => import('../layout'))
 const MainPage = lazy(() => import('../../pages/main/main-page'))
@@ -18,6 +19,7 @@ export const router = createBrowserRouter(
         <Route index element={<MainPage />} />
         <Route path=':category' element={<ByCategory />} />
         <Route path='search/:q' element={<SearchPage />} />
+        <Route path='favorites' element={<FavoritesPage />} />
       </Route>
       <Route path='registration' element={<RegistrationPage />} />
     </>,

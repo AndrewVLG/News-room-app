@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { searchReducer } from '../../features/searchbar/model/searchbar-slice'
 import { authReducer } from '../../features/userbar/model/login-slice'
 import { regReducer } from '../../features/registration/model/registration-slice'
+import { favoritesReducer } from '../../features/favorites/model/favorites-slice'
 import { newsApi } from '../../shared/api/news-api'
 import { registrationMiddleware } from './middleware/reg-middleware'
 import { localStorageMiddleware } from './middleware/local-storage-middleware'
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   searchBar: searchReducer,
   auth: authReducer,
   registration: regReducer,
+  favorites: favoritesReducer,
   [newsApi.reducerPath]: newsApi.reducer,
 })
 
