@@ -1,24 +1,9 @@
 ### `npm start`
 
-По FSD раскажу, как я вижу:
-
-app - инициализация стора, реакт роутер и т.д
-
-widgets - самые крупные блоки типа хедер, футер, какие-то секции и т.д
-состоящие из features и entities
-
-features - умные компоненты(если конечно у меня получилось их реализовать),
-у которых есть свои состояния и логика. features состоят из блоков entitie.
-
-entities - маленькие сторительные блоки. Поидеи все должны быть "глупыми" компонентами.
-
-shraed - различные кастомные хуки, кастомные Material-UI, утилиты, глобальные конфиги и т.д
-React
-
 - Пишем функциональные компоненты c хуками в приоритете над классовыми.
-- Есть разделение на умные и глупые компоненты (https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0, перевод - https://habr.com/ru/post/266559/). Это лишь общая рекомендация. Обратите внимание на Update from 2019 по первой ссылке от Дэна.
-- Есть рендеринг списков (https://ru.reactjs.org/docs/lists-and-keys.html)
-- Реализована хотя бы одна форма (https://ru.reactjs.org/docs/forms.html)
+- Есть разделение на умные и глупые компоненты [Глупые компоненты](https://github.com/AndrewVLG/News-room-app/tree/main/src/entities), [Умные компоненты](https://github.com/AndrewVLG/News-room-app/tree/main/src/features)
+- Есть рендеринг списков [Список статей](https://github.com/AndrewVLG/News-room-app/blob/main/src/widgets/top-headlines/top-headlines.tsx)
+- Реализована хотя бы одна форма [Форма регистрации](https://github.com/AndrewVLG/News-room-app/blob/main/src/features/registration/index.tsx)
 - Есть применение Контекст API (https://ru.reactjs.org/docs/context.html)
 - Есть применение предохранителя (https://ru.reactjs.org/docs/error-boundaries.html)
 - Есть хотя бы один кастомный хук (https://ru.reactjs.org/docs/hooks-custom.html)
