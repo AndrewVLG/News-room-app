@@ -6,15 +6,15 @@ import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import { useFavoritesAction } from './model/use-favorites-action'
 
 const Favorites = () => {
-  const { getUserFavorites } = useFavoritesAction()
+  const { fetchUserFavorites, deleteFavorite } = useFavoritesAction()
   const { user } = useAppContext()
   const favorites = useSelector((state: RootState) => state.favorites)
-
+  console.log(user)
   useEffect(() => {
     const login = user?.login as string
-    getUserFavorites(login)
-  }, [user])
-
+    fetchUserFavorites(login)
+  }, [])
+  console.log(favorites)
   return (
     <>
       {favorites.map((article, id) => (
@@ -24,9 +24,9 @@ const Favorites = () => {
           addToFavoritesList={() => {
             return
           }}
-          deleteFromFavorites={() => {
-            return
-          }}
+          deleteFromFavorites={() =>
+            deleteFavorite({ login: user?.login as string, fav: article })
+          }
           key={id}
         />
       ))}

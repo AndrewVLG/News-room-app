@@ -1,10 +1,11 @@
-import { FunctionComponent, useMemo } from 'react'
+import { FunctionComponent, useMemo, useState, useEffect } from 'react'
 import { Stack } from '@mui/material'
 
 import ArticleCard from '../../entities/article-card/article-card'
 import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import { useFavoritesAction } from '../../features/favorites/model/use-favorites-action'
+import { User } from '../../shared/hooks/use-auth'
 
 interface Props {
   data: Article[]
@@ -24,12 +25,15 @@ const checkFavorite = (data: Article[], favorites: string[]) => {
   }, [])
 }
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
-  const { user, isAuth } = useAppContext()
+  const { isAuth, refresh } = useAppContext()
+  const [user, setUser] = useState<User | null>(null)
   const articles = useMemo(
     () => checkFavorite(data, user?.favorites || []),
-    [data, isAuth],
+    [data, user],
   )
-  const { addToFavorites } = useFavoritesAction()
+  const { addToFavorites, deleteFavorite } = useFavoritesAction()
+  useEffect(() => refresh(setUser), [isAuth])
+  console.log(user)
   return (
     <Stack spacing={2}>
       {articles.map((article: FavoriteArticle, id: number) => (
@@ -37,9 +41,11 @@ const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
           article={article}
           addToFavoritesList={() => {
             addToFavorites({ login: user?.login as string, fav: article })
+            refresh(setUser)
           }}
           deleteFromFavorites={() => {
-            return
+            deleteFavorite({ login: user?.login as string, fav: article })
+            refresh(setUser)
           }}
           isAuth={isAuth}
           key={id}

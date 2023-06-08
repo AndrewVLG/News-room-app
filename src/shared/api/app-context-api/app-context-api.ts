@@ -15,6 +15,7 @@ interface AppC {
   changeCountry: (country: Country) => void
   addToHistory: (searchValue: string) => void
   clearHistory: () => void
+  refresh: (fn: any) => void
 }
 
 export const AppContext = createContext<AppC>({
@@ -29,6 +30,9 @@ export const AppContext = createContext<AppC>({
     return
   },
   clearHistory: () => {
+    return
+  },
+  refresh: (fn) => {
     return
   },
 })

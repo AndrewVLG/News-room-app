@@ -78,7 +78,7 @@ class LocalStorageAuth {
                 favorites: userIsFound.favorites as string[],
               },
             }),
-          1000,
+          100,
         )
       } else {
         setTimeout(
@@ -104,10 +104,61 @@ class LocalStorageAuth {
     if (user.favorites?.includes(favorite.url)) {
       return
     }
-
+    const articles = db.getAllArticles()
     user.favorites?.push(favorite.url)
     db.updateUser(user)
     db.addArticle(favorite)
+    const response = user.favorites?.reduce<FavoriteArticle[]>(
+      (result, current: string) => {
+        const article = articles.find((item) => item.url === current)
+        if (article) {
+          return [...result, { ...article, isFavorite: true }]
+        } else {
+          return result
+        }
+      },
+      [],
+    )
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(response), 1000)
+    })
+  }
+
+  /** ------------------------ **/
+
+  deleteFavorite(
+    login: string,
+    favorite: FavoriteArticle,
+  ): Promise<FavoriteArticle[] | undefined> {
+    const user = db.findUser(login)
+    if (!user) {
+      return Promise.reject()
+    }
+
+    if (!user.favorites) {
+      return Promise.reject()
+    }
+    const articles = db.getAllArticles()
+    const index = user.favorites?.indexOf(favorite.url)
+    const newFavList = [
+      ...user.favorites.slice(0, index),
+      ...user.favorites.slice(index + 1),
+    ]
+    db.updateUser({ ...user, favorites: newFavList })
+    const response = newFavList.reduce<FavoriteArticle[]>(
+      (result, current: string) => {
+        const article = articles.find((item) => item.url === current)
+        if (article) {
+          return [...result, { ...article, isFavorite: true }]
+        } else {
+          return result
+        }
+      },
+      [],
+    )
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(response), 300)
+    })
   }
 
   /** ------------------------ **/
@@ -132,7 +183,7 @@ class LocalStorageAuth {
       [],
     )
     return new Promise((resolve) => {
-      setTimeout(() => resolve(response), 1000)
+      setTimeout(() => resolve(response), 300)
     })
   }
 }

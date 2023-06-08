@@ -4,8 +4,8 @@ import LocalStorageAuth from '../../../shared/lib/local-storage-auth/local-stora
 
 const fakeServer = new LocalStorageAuth()
 const initialState: FavoriteArticle[] = []
-export const getUserFavorites = RTK.createAsyncThunk(
-  'favorites/getUserFav',
+export const fetchUserFavorites = RTK.createAsyncThunk(
+  'favorites/fetchUserFav',
   async (login: string) => {
     const response = await fakeServer.getFavorites(login)
     return response
@@ -18,16 +18,29 @@ export const addToFavorites = RTK.createAsyncThunk(
     return fav
   },
 )
-
+export const deleteFavorite = RTK.createAsyncThunk(
+  'favorites/delete',
+  async ({ login, fav }: { login: string; fav: FavoriteArticle }) => {
+    const response = await fakeServer.deleteFavorite(login, fav)
+    console.log(response)
+    return response
+  },
+)
 const favoritesSlice = RTK.createSlice({
   name: 'favorites',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      getUserFavorites.fulfilled,
+      fetchUserFavorites.fulfilled,
       (state, action: RTK.PayloadAction<FavoriteArticle[] | undefined>) => {
-        return [...state, ...(action.payload || [])]
+        return action.payload
+      },
+    )
+    builder.addCase(
+      deleteFavorite.fulfilled,
+      (state, action: RTK.PayloadAction<FavoriteArticle[] | undefined>) => {
+        return action.payload
       },
     )
   },

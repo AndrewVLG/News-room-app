@@ -31,19 +31,15 @@ const ArticleCard: FunctionComponent<Props> = ({
   deleteFromFavorites,
   isAuth,
 }) => {
-  const [isFavorite, setFavorite] = useState<boolean>(false)
   const publishedDate = `Дата публикации: ${getPublishedDate(publishedAt)}`
-  const addToFavorites = () => {
-    setFavorite((prev) => !prev)
-    if (!isFavorite) {
+  const actionOnFavList = () => {
+    if (!isFav) {
       addToFavoritesList()
     } else {
       deleteFromFavorites()
     }
   }
-  useEffect(() => {
-    setFavorite(isFav)
-  }, [isFav])
+
   return (
     <Card sx={{ maxWidth: 700 }}>
       <CardActionArea>
@@ -66,10 +62,7 @@ const ArticleCard: FunctionComponent<Props> = ({
         <Link to={url}>Читать в источнике</Link>
         <Typography sx={{ color: 'grey' }}>{publishedDate}</Typography>
         {isAuth && (
-          <FavoriteButton
-            handleClick={addToFavorites}
-            isFavorite={isFavorite}
-          />
+          <FavoriteButton handleClick={actionOnFavList} isFavorite={isFav} />
         )}
       </CardActions>
     </Card>
