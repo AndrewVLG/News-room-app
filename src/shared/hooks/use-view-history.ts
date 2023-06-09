@@ -27,6 +27,9 @@ const useViewHistory = (user: User | null, isAuth: boolean): UseViewHistory => {
     if (history.indexOf(searchValue) > -1) {
       return
     }
+    if (searchValue.length < 2) {
+      return
+    }
 
     if (history.length >= 10) {
       setHistory((prev) => [searchValue, ...prev.slice(0, 11)])
