@@ -39,7 +39,7 @@ export const newsApi = createApi({
     getHeadlines: builder.query<Response, QueryParams>({
       query: ({ country }) => ({
         url: `top-headlines`,
-        params: { country, apiKey: API_KEY.KEY1 },
+        params: { country, apiKey: API_KEY.KEY2 },
       }),
       transformResponse: (response: Response) => {
         return {
@@ -53,13 +53,13 @@ export const newsApi = createApi({
     getNewsByCategory: builder.query<Response, QueryParams>({
       query: ({ country, category }) => ({
         url: `top-headlines`,
-        params: { country, category, apiKey: API_KEY.KEY1 },
+        params: { country, category, apiKey: API_KEY.KEY2 },
       }),
     }),
     searchNews: builder.query<Article[], QueryParams>({
       query: ({ q }) => ({
         url: `top-headlines`,
-        params: { q, pageSize: 10, apiKey: API_KEY.KEY1 },
+        params: { q, pageSize: 10, apiKey: API_KEY.KEY2 },
       }),
       transformResponse: (response: Response) => {
         return response.articles

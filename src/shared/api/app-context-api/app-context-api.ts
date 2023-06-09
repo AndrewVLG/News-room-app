@@ -15,7 +15,7 @@ interface AppC {
   changeCountry: (country: Country) => void
   addToHistory: (searchValue: string) => void
   clearHistory: () => void
-  refresh: (fn: any) => void
+  refresh: (fn: (user: User | null) => void) => void
 }
 
 export const AppContext = createContext<AppC>({

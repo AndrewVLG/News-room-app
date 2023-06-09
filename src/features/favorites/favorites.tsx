@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { redirect, useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/app-redux'
 import ArticleCard from '../../entities/article-card'
@@ -9,12 +10,14 @@ const Favorites = () => {
   const { fetchUserFavorites, deleteFavorite } = useFavoritesAction()
   const { user } = useAppContext()
   const favorites = useSelector((state: RootState) => state.favorites)
-  console.log(user)
+  const navigate = useNavigate()
   useEffect(() => {
+    if (!user) {
+      navigate('/')
+    }
     const login = user?.login as string
     fetchUserFavorites(login)
   }, [])
-  console.log(favorites)
   return (
     <>
       {favorites.map((article, id) => (

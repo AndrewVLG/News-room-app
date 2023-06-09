@@ -10,7 +10,7 @@ export interface User {
 }
 interface UseAuth {
   isAuth: boolean
-  refresh: (fn: any) => void
+  refresh: (fn: (user: User | null) => void) => void
   user: User | null
 }
 const useAuth = (): UseAuth => {
@@ -33,13 +33,15 @@ const useAuth = (): UseAuth => {
         .catch((response) => {
           setUser(null)
           setAuth(response.isAuth)
+          localStorage.removeItem('news-app-token')
+          sessionStorage.removeItem('news-app-token')
         })
     } else {
       setAuth(false)
       setUser(null)
     }
   }, [loginCompleted])
-  const refresh = (fn: any) => {
+  const refresh = (fn: (user: User | null) => void) => {
     localStorageAuth
       .authMe(sessionStorageToken || localStorageToken || '')
       .then((response) => {

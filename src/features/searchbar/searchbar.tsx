@@ -24,11 +24,11 @@ const Searchbar = () => {
   return (
     <>
       <SearchbarWrapper>
-        <SearchButton onHandler={setSearchState} />
+        <SearchButton onHandler={() => setSearchState(true)} />
         {isOpenSearch && (
           <SearchInput
             handleChangeSearch={setSearchValue}
-            handleClickHistoryButton={setHistoryState}
+            handleClickHistoryButton={() => setHistoryState(true)}
           />
         )}
       </SearchbarWrapper>
@@ -38,7 +38,7 @@ const Searchbar = () => {
             <SearchHistoryItem
               text={elem}
               key={id}
-              handleClick={setHistoryState}
+              handleClick={() => setHistoryState(true)}
             />
           ))}
         </SearchHistoryList>
