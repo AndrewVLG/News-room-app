@@ -23,15 +23,17 @@ const checkPasswordLength = (password: string | null): InputStatus => {
 }
 
 const passwordSymbol = /!|#|@|%/
+const passwordChar = /w/
 
 const checkSymbol = (password: string | null): InputStatus => {
   if (!password) {
     return InputStatus.warning
   }
-  if (passwordSymbol.test(password)) {
+  if (!passwordSymbol.test(password) || !passwordChar.test(password)) {
+    return InputStatus.warning
+  } else {
     return InputStatus.success
   }
-  return InputStatus.warning
 }
 
 const compareValue = (

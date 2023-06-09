@@ -34,6 +34,7 @@ const InputsGroup: FunctionComponent<Inputs> = ({
       <FormControl>
         <InputLabel>Пароль</InputLabel>
         <Input
+          type='password'
           onChange={handleChangePassword}
           startAdornment={
             <InputAdornment position='start'>

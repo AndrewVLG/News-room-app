@@ -80,7 +80,8 @@ const Registration = () => {
           status: passwordLength,
         },
         {
-          message: 'Пароль должен содержать символы: !, #, @, %',
+          message:
+            'Пароль должен состоять из латинских букв и содержать символы: !, #, @, %',
           status: passwordSymbol,
         },
       ],

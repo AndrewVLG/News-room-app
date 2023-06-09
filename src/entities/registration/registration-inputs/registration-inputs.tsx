@@ -7,9 +7,12 @@ const RegistrationInputs: FunctionComponent<RegInputs> = ({ child }) => {
   return (
     <>
       {child.map((input: Input, id) => {
+        const inputNamePassword =
+          input.name === 'Пароль' || input.name === 'Повторите пароль'
         return (
           <Stack ml={2} spacing={1} key={id}>
             <RegInput
+              type={inputNamePassword ? 'password' : 'text'}
               variant='outlined'
               color='secondary'
               focused
