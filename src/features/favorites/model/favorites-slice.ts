@@ -22,7 +22,6 @@ export const deleteFavorite = RTK.createAsyncThunk(
   'favorites/delete',
   async ({ login, fav }: { login: string; fav: FavoriteArticle }) => {
     const response = await fakeServer.deleteFavorite(login, fav)
-    console.log(response)
     return response
   },
 )
