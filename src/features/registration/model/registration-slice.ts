@@ -2,7 +2,7 @@ import * as RTK from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import LocalStorageAuth from '../../../shared/lib/local-storage-auth/local-storage-auth'
 import { User } from '../../../shared/lib/local-storage-auth/types'
-import { InitialState, InputStatus, Request } from './types'
+import { InitialState } from './types'
 
 const fakeApi = new LocalStorageAuth()
 const initialState: InitialState = {

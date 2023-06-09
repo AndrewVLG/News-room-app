@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { redirect, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../app/app-redux'
 import ArticleCard from '../../entities/article-card'
