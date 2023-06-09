@@ -9,7 +9,7 @@
 - Есть хотя бы один кастомный хук [Хуки](https://github.com/AndrewVLG/News-room-app/tree/main/src/shared/hooks)
 - Хотя бы несколько компонентов используют PropTypes 
 - Поиск не должен триггерить много запросов к серверу [Хук useDebounce](https://github.com/AndrewVLG/News-room-app/blob/main/src/shared/hooks/use-debounce.ts)
-- Есть применение lazy + Suspense [Lazy and Suspense](https://github.com/AndrewVLG/News-room-app/blob/main/src/app/app-routing/index.tsx)
+- Есть применение lazy + Suspense [Lazy](https://github.com/AndrewVLG/News-room-app/blob/main/src/app/app-routing/index.tsx), [Suspense](https://github.com/AndrewVLG/News-room-app/blob/main/src/app/index.tsx)
 - Redux
 - Используем Modern Redux with Redux Toolkit [app-redux](https://github.com/AndrewVLG/News-room-app/blob/main/src/app/app-redux/index.ts)
 - Используем слайсы [registration-slice](https://github.com/AndrewVLG/News-room-app/blob/main/src/features/registration/model/registration-slice.ts)
