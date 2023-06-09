@@ -1,4 +1,5 @@
 import { FunctionComponent } from 'react'
+import { Link } from 'react-router-dom'
 import { ButtonBase, styled } from '@mui/material'
 import { CategoryBtn } from '../../../shared/config/types'
 
@@ -20,9 +21,9 @@ const CatLink = styled('a')({
 
 const CategoryButton: FunctionComponent<CategoryBtn> = ({ href, name }) => {
   return (
-    <CatLink href={href}>
+    <Link to={href} style={{ color: 'white' }}>
       <CatButton>{name}</CatButton>
-    </CatLink>
+    </Link>
   )
 }
 export default CategoryButton

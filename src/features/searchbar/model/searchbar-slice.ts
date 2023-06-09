@@ -10,9 +10,6 @@ const navModuleSlice = createSlice({
   initialState,
   reducers: {
     setSearchState: (state) => {
-      if (state.isOpenHistory) {
-        state.isOpenHistory = false
-      }
       state.isOpenSearch = !state.isOpenSearch
     },
     setHistoryState: (state) => {

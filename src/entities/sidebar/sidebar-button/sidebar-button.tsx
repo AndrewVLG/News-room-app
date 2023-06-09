@@ -1,9 +1,11 @@
 import { FunctionComponent } from 'react'
+
+import { Link } from 'react-router-dom'
 import { ButtonBase, styled } from '@mui/material'
 import { CategoryBtn } from '../../../shared/config/types'
 
 const SidebarBtn = styled(ButtonBase)({
-  color: 'white',
+  color: 'black',
   width: '185px',
   height: '40px',
   '&:hover': {
@@ -19,9 +21,9 @@ const LinkBtn = styled('a')({
 
 const SidebarButton: FunctionComponent<CategoryBtn> = ({ href, name }) => {
   return (
-    <SidebarBtn>
-      <LinkBtn href={href}>{name}</LinkBtn>
-    </SidebarBtn>
+    <Link to={href}>
+      <SidebarBtn>{name}</SidebarBtn>
+    </Link>
   )
 }
 export default SidebarButton
