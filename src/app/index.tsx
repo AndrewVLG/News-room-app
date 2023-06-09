@@ -16,10 +16,10 @@ const App = () => {
   const { isAuth, user, refresh } = useAuth()
   const { addToHistory, clearHistory, history } = useViewHistory(user, isAuth)
   const [country, setCountry] = useState<Country>('us')
+
   const changeCountry = (country: Country) => {
     setCountry(country)
   }
-  console.log('render')
   return (
     <AppContext.Provider
       value={{

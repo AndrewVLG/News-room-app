@@ -27,13 +27,16 @@ const checkFavorite = (data: Article[], favorites: string[]) => {
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
   const { isAuth, refresh } = useAppContext()
   const [user, setUser] = useState<User | null>(null)
+
   const articles = useMemo(
     () => checkFavorite(data, user?.favorites || []),
     [data, user],
   )
+
   const { addToFavorites, deleteFavorite } = useFavoritesAction()
+
   useEffect(() => refresh(setUser), [isAuth])
-  console.log(user)
+
   return (
     <Stack spacing={2}>
       {articles.map((article: FavoriteArticle, id: number) => (

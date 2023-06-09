@@ -2,11 +2,14 @@ import { ChangeEventHandler, SyntheticEvent, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
 import { CircularProgress, Snackbar } from '@mui/material'
+
 import { RootState } from '../../app/app-redux'
 import BirthInput from '../../entities/registration/birth-input/'
-import { RegistrationButton } from '../../shared/ui/basic-button'
 import CustomInputs from '../../entities/registration/registration-inputs/registration-inputs'
+import { Input } from '../../entities/registration/config/types'
+import { RegistrationButton } from '../../shared/ui/basic-button'
 import validator from '../../shared/util/validator'
+
 import useRegActions from './model/use-reg-actions'
 import { InputStatus } from './model/types'
 
@@ -58,11 +61,7 @@ const Registration = () => {
     sendRegData({ login: loginValue, password: passwordValue, birthDay })
   }
 
-  const passwordInputs: {
-    name: string
-    alerts?: { message: string; status: InputStatus }[]
-    handler: ChangeEventHandler<HTMLInputElement>
-  }[] = [
+  const passwordInputs: Input[] = [
     {
       name: 'Логин',
       alerts: [
@@ -93,9 +92,11 @@ const Registration = () => {
       handler: writeConfirmValue,
     },
   ]
+
   useEffect(() => {
     setTimeout(() => clearError(), 2000)
   }, [message])
+
   return (
     <form>
       {message && (

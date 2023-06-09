@@ -1,5 +1,3 @@
-import dayjs from 'dayjs'
-
 export enum InputStatus {
   warning = 'warning',
   success = 'success',

@@ -11,9 +11,7 @@ type Params = {
 const SearchPage = () => {
   const { country, addToHistory } = useAppContext()
   const { q } = useParams() as Params
-  const { value } = useDebounce(q, 1000, (searchValue) =>
-    addToHistory(searchValue),
-  )
+  const { value } = useDebounce(q, 1000, addToHistory)
   const { data = [], isLoading } = useSearchNewsQuery(
     { country, q: value },
     { skip: !value || value.length < 2 },

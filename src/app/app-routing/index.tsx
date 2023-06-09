@@ -5,12 +5,12 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom'
 import SearchPage from '../../pages/search-page'
-import FavoritesPage from '../../pages/favorites'
 
 const Layout = lazy(() => import('../layout'))
 const MainPage = lazy(() => import('../../pages/main/main-page'))
 const RegistrationPage = lazy(() => import('../../pages/registration'))
 const ByCategory = lazy(() => import('../../pages/by-category'))
+const FavoritesPage = lazy(() => import('../../pages/favorites'))
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

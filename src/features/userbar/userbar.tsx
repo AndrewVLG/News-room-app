@@ -22,9 +22,9 @@ const Userbar = () => {
 
   const {
     clearError,
-    makeLogin,
-    writeAuthLogin,
-    writeAuthPassword,
+    fetchUserData,
+    setLogin,
+    setPassword,
     setRemember,
     logout,
   } = useLoginActions()
@@ -52,13 +52,13 @@ const Userbar = () => {
     setAnchorEl(null)
   }
   const changeLogin = (e: ChangeEvent<HTMLInputElement>) => {
-    writeAuthLogin(e.currentTarget.value)
+    setLogin(e.currentTarget.value)
   }
   const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    writeAuthPassword(e.currentTarget.value)
+    setPassword(e.currentTarget.value)
   }
   const userLogin = () => {
-    makeLogin({ login, password })
+    fetchUserData({ login, password })
   }
   const memUser = (e: ChangeEvent<HTMLInputElement>) => {
     setRemember(e.target.checked)
