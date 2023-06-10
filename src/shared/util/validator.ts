@@ -23,7 +23,7 @@ const checkPasswordLength = (password: string | null): InputStatus => {
 }
 
 const passwordSymbol = /!|#|@|%/
-const passwordChar = /w/
+const passwordChar = /[a-zA-Z0-9]+/
 
 const checkSymbol = (password: string | null): InputStatus => {
   if (!password) {
