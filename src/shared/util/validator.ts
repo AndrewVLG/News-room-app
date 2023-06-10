@@ -1,4 +1,3 @@
-import { log } from 'console'
 import { InputStatus } from '../config/types/types'
 
 interface Validator {
