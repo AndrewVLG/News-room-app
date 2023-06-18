@@ -4,6 +4,7 @@ import { authReducer } from '../../features/userbar/model/login-slice'
 import { regReducer } from '../../features/registration/model/registration-slice'
 import { favoritesReducer } from '../../features/favorites/model/favorites-slice'
 import { newsApi } from '../../shared/api/news-api'
+import { currenciesApi } from '../../shared/api/currencies-api'
 import { registrationMiddleware } from './middleware/reg-middleware'
 import { localStorageMiddleware } from './middleware/local-storage-middleware'
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   registration: regReducer,
   favorites: favoritesReducer,
   [newsApi.reducerPath]: newsApi.reducer,
+  [currenciesApi.reducerPath]: currenciesApi.reducer,
 })
 
 export const store = configureStore({
@@ -22,6 +24,7 @@ export const store = configureStore({
       registrationMiddleware,
       localStorageMiddleware,
       newsApi.middleware,
+      currenciesApi.middleware,
     ),
 })
 

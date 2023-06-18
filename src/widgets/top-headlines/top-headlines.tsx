@@ -27,7 +27,7 @@ const checkFavorite = (data: Article[], favorites: string[]) => {
 const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
   const { isAuth, refresh } = useAppContext()
   const [user, setUser] = useState<User | null>(null)
-
+  const login = user?.login as string
   const articles = useMemo(
     () => checkFavorite(data, user?.favorites || []),
     [data, user],
@@ -43,11 +43,11 @@ const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
         <ArticleCard
           article={article}
           addToFavoritesList={() => {
-            addToFavorites({ login: user?.login as string, fav: article })
+            addToFavorites({ login, fav: article })
             refresh(setUser)
           }}
           deleteFromFavorites={() => {
-            deleteFavorite({ login: user?.login as string, fav: article })
+            deleteFavorite({ login, fav: article })
             refresh(setUser)
           }}
           isAuth={isAuth}
