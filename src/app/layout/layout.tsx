@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router'
-import Header from '../../widgets/header/header'
-import Footer from '../../widgets/footer/footer'
-import Currency from '../../widgets/currency/currency'
+import Header from '../../widgets/header'
+import Footer from '../../widgets/footer'
+import Currency from '../../widgets/currency'
 
 const Layout = () => {
   return (
