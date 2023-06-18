@@ -12,7 +12,9 @@ const CurrencySelect: FunctionComponent<Props> = ({ value, changeHandler }) => {
   }
   return (
     <Select
-      sx={{ color: 'red' }}
+      IconComponent={() => null}
+      disableUnderline
+      sx={{ color: '#FF1E0C' }}
       variant='standard'
       defaultValue='USD'
       onChange={handleChange}
