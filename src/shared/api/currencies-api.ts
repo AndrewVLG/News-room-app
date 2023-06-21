@@ -7,6 +7,7 @@ interface Params {
   base_currency: string
   currencies?: string
 }
+export type Currencies = 'RUB' | 'USD' | 'BTC' | 'BYN' | 'JPY'
 export const currenciesApi = createApi({
   reducerPath: 'currencies',
   baseQuery: fetchBaseQuery({
@@ -14,10 +15,10 @@ export const currenciesApi = createApi({
     headers: { apikey: _API_KEY },
   }),
   endpoints: (builder) => ({
-    getAllCurrencies: builder.query<CurrencyObj, Params>({
-      query: ({ base_currency }) => ({
+    getAllCurrencies: builder.query<CurrencyObj[], Params>({
+      query: ({ base_currency, currencies }) => ({
         url: 'latest',
-        params: { base_currency, currencies: 'RUB' },
+        params: { base_currency, currencies },
       }),
       transformResponse: (response: CurrencyResponse) => {
         const currenciesData = response.data
@@ -29,5 +30,5 @@ export const currenciesApi = createApi({
 export const { useGetAllCurrenciesQuery } = currenciesApi
 
 function transformCurrencyData(currenciesData: CurrencyData) {
-  return currenciesData.RUB
+  return Object.values(currenciesData)
 }
