@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router'
 import Header from '../../widgets/header'
 import Footer from '../../widgets/footer'
-import Currency from '../../widgets/currency'
+import HeaderWidgets from '../../widgets/header-widgets'
 
 const Layout = () => {
   return (
     <>
       <Header />
-      <Currency />
+      <HeaderWidgets />
       <Outlet />
       <Footer />
     </>

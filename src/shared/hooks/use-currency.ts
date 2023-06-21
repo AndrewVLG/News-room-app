@@ -1,23 +1,38 @@
 import { useState } from 'react'
-import { useGetAllCurrenciesQuery } from '../api/currencies-api'
+import { Currencies, useGetAllCurrenciesQuery } from '../api/currencies-api'
+import { CurrencyObj } from '../api/currencies-types'
 interface UseCurrency {
   isLoading: boolean
-  currency: string
-  value: number | boolean
-  setCurrency: (code: string) => void
+  baseCurrency: string
+  currencies: CurrencyObj[]
+  setBaseCurrency: (code: string) => void
+  addToCurrenciesList: (code: Currencies) => void
 }
 export const useCurrency = (): UseCurrency => {
-  const [current, setCurrent] = useState<string>('USD')
+  const [baseCurrency, setBaseCurrency] = useState<string>('USD')
+  const [currenciesArray, setCurrenciesArray] = useState<Currencies[]>(['RUB'])
+
+  const currencies = currenciesArray.join()
+
   const { data, isLoading, isSuccess } = useGetAllCurrenciesQuery({
-    base_currency: current,
+    base_currency: baseCurrency,
+    currencies,
   })
-  const setCurrency = (code: string) => {
-    setCurrent(code)
+
+  const addToCurrenciesList = (code: Currencies) => {
+    const isMatch = currenciesArray.includes(code)
+
+    if (isMatch) {
+      return
+    }
+    const newList = [...currenciesArray, code]
+    setCurrenciesArray(newList)
   }
   return {
     isLoading,
-    currency: current,
-    value: isSuccess && data.value,
-    setCurrency,
+    baseCurrency,
+    currencies: isSuccess ? data : [],
+    setBaseCurrency,
+    addToCurrenciesList,
   }
 }
