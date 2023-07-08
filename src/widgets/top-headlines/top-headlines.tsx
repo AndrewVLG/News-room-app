@@ -6,6 +6,7 @@ import { Article } from '../../shared/api/news-api'
 import { useAppContext } from '../../shared/api/app-context-api/app-context-api'
 import { useFavoritesAction } from '../../features/favorites/model/use-favorites-action'
 import { User } from '../../shared/hooks/use-auth'
+import { useScrollTop } from '../../shared/hooks/use-scroll-top'
 
 interface Props {
   data: Article[]
@@ -36,7 +37,7 @@ const TopHeadlines: FunctionComponent<Props> = ({ data }) => {
   const { addToFavorites, deleteFavorite } = useFavoritesAction()
 
   useEffect(() => refresh(setUser), [isAuth])
-
+  useScrollTop()
   return (
     <Stack spacing={2}>
       {articles.map((article: FavoriteArticle, id: number) => (

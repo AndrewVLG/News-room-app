@@ -1,0 +1,7 @@
+import { useEffect } from 'react'
+import { useLocation } from 'react-router'
+
+export const useScrollTop = () => {
+  const { pathname } = useLocation()
+  useEffect(() => document.documentElement.scrollTo(0, 0), [pathname])
+}
